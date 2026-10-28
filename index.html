@@ -263,12 +263,12 @@
       line-height: 1.45;
     }
 
-    .works-slide { background: var(--blush); padding: 48px 88px; }
+    .works-slide { background: var(--white); padding: 48px 88px; }
 
     .works-title {
       margin: 28px 0 0;
       font-family: "Bebas Neue", sans-serif;
-      font-size: 152px;
+      font-size: 128px;
       font-weight: 400;
       line-height: 1;
       letter-spacing: -2px;
@@ -276,7 +276,7 @@
 
     .works-flow {
       position: absolute;
-      top: 290px;
+      top: 268px;
       left: 88px;
       right: 88px;
       display: grid;
@@ -291,10 +291,10 @@
 
     .works-step:not(:last-child)::after {
       position: absolute;
-      top: 330px;
-      right: -82px;
+      top: 350px;
+      right: -76px;
       color: var(--clay);
-      font-size: 44px;
+      font-size: 32px;
       line-height: 1;
       content: "→";
     }
@@ -302,7 +302,7 @@
     .works-step h3 {
       margin: 0;
       font-family: "Bebas Neue", sans-serif;
-      font-size: 40px;
+      font-size: 36px;
       font-weight: 400;
       line-height: 1;
       letter-spacing: 1px;
@@ -310,21 +310,42 @@
 
     .works-step h3 span { color: var(--clay); }
 
-    .works-step figure { margin: 22px 0 0; }
+    .works-step figure { margin: 16px 0 0; }
 
-    .works-step img {
-      display: block;
-      height: 570px;
-      width: auto;
-      max-width: 100%;
+    .iphone {
+      position: relative;
+      width: fit-content;
       margin: 0 auto;
-      object-fit: contain;
+      padding: 10px;
+      border: 2px solid var(--sage);
+      border-radius: 44px;
+      background: var(--brown);
+      box-shadow: 0 12px 24px rgb(51 46 44 / 12%);
+    }
+
+    .iphone::before,
+    .iphone::after {
+      position: absolute;
+      width: 3px;
+      border-radius: 2px;
+      background: var(--brown);
+      content: "";
+    }
+
+    .iphone::before { top: 112px; left: -4px; height: 54px; }
+    .iphone::after { top: 138px; right: -4px; height: 70px; }
+
+    .iphone img {
+      display: block;
+      height: 620px;
+      width: auto;
+      border-radius: 32px;
     }
 
     .works-step figcaption {
-      margin-top: 20px;
-      font-size: 25px;
-      line-height: 1.4;
+      margin-top: 14px;
+      font-size: 20px;
+      line-height: 1.3;
     }
 
     .slide-marker {
@@ -410,22 +431,28 @@
         <li class="works-step">
           <h3><span>01 —</span> CONVERSATION</h3>
           <figure>
-            <img src="assets/auri-conversation.jpg" alt="Auri conversation about an assignment, household tasks, and an appointment" width="720" height="1280">
-            <figcaption>Talk to Auri about what’s going on.</figcaption>
+            <div class="iphone">
+              <img src="assets/auri-conversation.jpg" alt="Auri conversation about an assignment, household tasks, and an appointment" width="720" height="1280">
+            </div>
+            <figcaption>Conversation — Talk naturally about what’s going on.</figcaption>
           </figure>
         </li>
         <li class="works-step">
           <h3><span>02 —</span> ORGANIZATION</h3>
           <figure>
-            <img src="assets/auri-organization.jpg" alt="Auri Arabic study space organizing an assignment, notes, and files" width="720" height="1280">
-            <figcaption>Auri keeps track of what matters.</figcaption>
+            <div class="iphone">
+              <img src="assets/auri-organization.jpg" alt="Auri Arabic study space organizing an assignment, notes, and files" width="720" height="1280">
+            </div>
+            <figcaption>Organization — Auri keeps track of what matters.</figcaption>
           </figure>
         </li>
         <li class="works-step">
           <h3><span>03 —</span> ADAPTATION</h3>
           <figure>
-            <img src="assets/auri-adaptation.jpg" alt="Auri suggests trying a 15-minute time block for the Arabic assignment" width="592" height="1280">
-            <figcaption>If one approach doesn’t help, Auri can try another.</figcaption>
+            <div class="iphone">
+              <img src="assets/auri-adaptation.jpg" alt="Auri suggests trying a 15-minute time block for the Arabic assignment" width="592" height="1280">
+            </div>
+            <figcaption>Adaptation — Auri tries a different approach when something isn’t helping.</figcaption>
           </figure>
         </li>
       </ol>
