@@ -13,6 +13,7 @@
       --brown: #332E2C;
       --sage: #7D866B;
       --clay: #8D624E;
+      --blush: #F2E3DF;
     }
 
     * { box-sizing: border-box; }
@@ -120,6 +121,114 @@
     }
 
     .cover-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .slide[hidden] { display: none; }
+
+    .problem-slide { background: var(--blush); padding: 48px 88px; }
+
+    .problem-header {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--clay);
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .problem-title {
+      margin: 34px 0 30px;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 240px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .problem-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: start;
+    }
+
+    .problem-intro h3 {
+      margin: 0;
+      max-width: 780px;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 58px;
+      font-weight: 400;
+      line-height: 1.08;
+    }
+
+    .problem-intro p {
+      margin: 0;
+      font-size: 29px;
+      line-height: 1.5;
+    }
+
+    .problem-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin: 64px 0 58px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .problem-list li { padding: 0 34px; border-left: 1px solid var(--clay); }
+    .problem-list li:first-child { padding-left: 0; border-left: 0; }
+
+    .problem-number {
+      display: block;
+      margin-bottom: 16px;
+      color: var(--clay);
+      font-size: 20px;
+      letter-spacing: 3px;
+    }
+
+    .problem-list h3 {
+      margin: 0;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 48px;
+      font-weight: 400;
+      line-height: 1.08;
+    }
+
+    .problem-takeaway { border-top: 1px solid var(--clay); padding-top: 28px; }
+
+    .problem-takeaway h3 {
+      margin: 0 0 15px;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 58px;
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .problem-takeaway p { max-width: 1500px; margin: 0; font-size: 28px; line-height: 1.45; }
+
+    .slide-marker {
+      position: absolute;
+      right: 88px;
+      bottom: 42px;
+      margin: 0;
+      font-size: 17px;
+      letter-spacing: 3px;
+    }
+
+    .deck-nav { position: absolute; left: 88px; bottom: 12px; display: flex; gap: 24px; }
+
+    .deck-nav button {
+      padding: 6px 0;
+      border: 0;
+      background: transparent;
+      color: var(--brown);
+      font: 500 16px "Inter", sans-serif;
+      cursor: pointer;
+    }
+
+    .deck-nav button:disabled { opacity: .35; cursor: default; }
+    .deck-nav button:focus-visible { outline: 2px solid var(--clay); outline-offset: 4px; }
   </style>
   <script>
     function resizeSlide() {
@@ -132,7 +241,7 @@
 </head>
 <body>
   <main class="slide-frame" aria-label="Auri pitch deck">
-    <section class="slide" aria-labelledby="slide-title">
+    <section class="slide" id="slide-1" aria-labelledby="slide-title">
       <header class="slide-header">
         <span>Auri</span>
         <span class="header-rule" aria-hidden="true"></span>
@@ -145,6 +254,69 @@
         <img src="assets/workspace.jpg" alt="A naturally lit workspace with a laptop, books, and plants beside a window" width="960" height="1280">
       </figure>
     </section>
+
+    <section class="slide problem-slide" id="slide-2" aria-labelledby="problem-title" hidden>
+      <header class="problem-header">
+        <span>Auri / Pitch Day 2026</span>
+        <span>The Problem</span>
+      </header>
+      <h2 class="problem-title" id="problem-title">THE PROBLEM</h2>
+      <div class="problem-intro">
+        <h3>Executive-functioning difficulties can make everyday life overwhelming.</h3>
+        <p>Planning, remembering, organizing, prioritizing, getting started, and following through can require significant mental effort.</p>
+      </div>
+      <ol class="problem-list">
+        <li><span class="problem-number">01</span><h3>Remembering<br>important things</h3></li>
+        <li><span class="problem-number">02</span><h3>Organizing<br>and prioritizing</h3></li>
+        <li><span class="problem-number">03</span><h3>Getting<br>started</h3></li>
+        <li><span class="problem-number">04</span><h3>Following<br>through</h3></li>
+      </ol>
+      <div class="problem-takeaway">
+        <h3>The tools meant to help can become another thing to manage.</h3>
+        <p>Many productivity tools still rely on the same executive-functioning skills the user is already struggling with.</p>
+      </div>
+      <p class="slide-marker" aria-label="Slide 2 of 7">02 — 07</p>
+    </section>
+    <nav class="deck-nav" aria-label="Slide navigation">
+      <button type="button" id="previous-slide" aria-label="Previous slide">← Previous</button>
+      <button type="button" id="next-slide" aria-label="Next slide">Next →</button>
+    </nav>
   </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const previous = document.getElementById('previous-slide');
+    const next = document.getElementById('next-slide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      currentSlide = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((slide, i) => { slide.hidden = i !== currentSlide; });
+      previous.disabled = currentSlide === 0;
+      next.disabled = currentSlide === slides.length - 1;
+    }
+
+    function readSlideHash() {
+      const index = slides.findIndex(slide => '#' + slide.id === window.location.hash);
+      showSlide(index < 0 ? 0 : index);
+    }
+
+    function navigateSlide(index) {
+      const target = Math.max(0, Math.min(index, slides.length - 1));
+      window.location.hash = slides[target].id;
+    }
+
+    previous.addEventListener('click', () => navigateSlide(currentSlide - 1));
+    next.addEventListener('click', () => navigateSlide(currentSlide + 1));
+    window.addEventListener('hashchange', readSlideHash);
+    document.addEventListener('keydown', event => {
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        event.preventDefault();
+        navigateSlide(currentSlide + (event.key === 'ArrowRight' ? 1 : -1));
+      }
+    });
+    readSlideHash();
+  </script>
 </body>
 </html>
