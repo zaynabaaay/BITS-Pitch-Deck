@@ -480,7 +480,17 @@
       place-items: center;
     }
 
-    .progress-visual img { display: block; width: auto; height: 600px; }
+    .progress-photo-placeholder {
+      width: 100%;
+      height: 600px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--clay);
+      color: var(--clay);
+      font-size: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
 
     .progress-builder {
       position: absolute;
@@ -740,7 +750,10 @@
         </ul>
       </div>
       <figure class="progress-visual">
-        <img src="assets/auri-organization.jpg" alt="Auri prototype showing a project overview with an assignment, notes, and files" width="720" height="1280">
+        <!-- Replace this placeholder with an editorial workspace photo. -->
+        <div class="progress-photo-placeholder" role="img" aria-label="Photo placeholder for a calm workspace where Auri is being built">
+          <span>Workspace photograph</span>
+        </div>
       </figure>
       <div class="progress-builder">
         <h3>BUILT BY</h3>
