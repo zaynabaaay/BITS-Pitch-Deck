@@ -204,7 +204,8 @@
 
     .solution-slide .editorial-header,
     .works-slide .editorial-header,
-    .audience-slide .editorial-header { border-bottom-color: var(--clay); }
+    .audience-slide .editorial-header,
+    .progress-slide .editorial-header { border-bottom-color: var(--clay); }
 
     .solution-title {
       position: absolute;
@@ -419,6 +420,91 @@
 
     .audience-challenges li:first-child { padding-top: 0; }
 
+    .progress-slide { background: var(--blush); padding: 48px 88px; }
+
+    .progress-title {
+      margin: 34px 0 24px;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 240px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .progress-statement {
+      margin: 0;
+      font-size: 48px;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: -1px;
+    }
+
+    .progress-working,
+    .progress-development { position: absolute; top: 550px; }
+
+    .progress-working { left: 88px; width: 540px; }
+    .progress-development { left: 720px; width: 480px; }
+
+    .progress-slide h3 {
+      margin: 0 0 28px;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 48px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+
+    .progress-working h3 { color: var(--brown); }
+    .progress-development h3 { color: var(--clay); }
+
+    .progress-slide ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 30px;
+      line-height: 1.45;
+    }
+
+    .progress-slide li { margin-bottom: 15px; }
+
+    .progress-visual {
+      position: absolute;
+      top: 350px;
+      right: 88px;
+      width: 450px;
+      height: 626px;
+      margin: 0;
+      padding-left: 50px;
+      border-left: 1px solid var(--clay);
+      display: grid;
+      place-items: center;
+    }
+
+    .progress-visual img { display: block; width: auto; height: 600px; }
+
+    .progress-builder {
+      position: absolute;
+      left: 88px;
+      right: 650px;
+      bottom: 82px;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 24px;
+      align-items: start;
+      border-top: 1px solid var(--clay);
+      padding-top: 28px;
+    }
+
+    .progress-builder h3 { margin: 0; font-size: 36px; }
+    .progress-builder p { margin: 0; font-size: 32px; line-height: 1.3; }
+
+    .progress-builder span {
+      display: block;
+      margin-top: 10px;
+      font-size: 24px;
+      line-height: 1.4;
+    }
+
     .slide-marker {
       position: absolute;
       right: 88px;
@@ -551,6 +637,39 @@
         </ul>
       </aside>
       <p class="slide-marker" aria-label="Slide 5 of 7">05 — 07</p>
+    </section>
+
+    <section class="slide progress-slide" id="slide-6" aria-labelledby="progress-title" hidden>
+      <header class="editorial-header">
+        <span>Auri / Pitch Day 2026</span>
+      </header>
+      <h2 class="progress-title" id="progress-title">PROGRESS</h2>
+      <p class="progress-statement">Auri is already being built.</p>
+      <div class="progress-working">
+        <h3>WORKING NOW</h3>
+        <ul>
+          <li>AI conversation</li>
+          <li>Persistent memory and context</li>
+          <li>Projects</li>
+          <li>Calendar access</li>
+        </ul>
+      </div>
+      <div class="progress-development">
+        <h3>IN DEVELOPMENT</h3>
+        <ul>
+          <li>Tasks</li>
+          <li>Focus</li>
+          <li>Adaptive support</li>
+        </ul>
+      </div>
+      <figure class="progress-visual">
+        <img src="assets/auri-organization.jpg" alt="Auri prototype showing a project overview with an assignment, notes, and files" width="720" height="1280">
+      </figure>
+      <div class="progress-builder">
+        <h3>BUILT BY</h3>
+        <p>Zaynab Omer<span>Computer programming and IT background</span></p>
+      </div>
+      <p class="slide-marker" aria-label="Slide 6 of 7">06 — 07</p>
     </section>
   </main>
 
