@@ -43,18 +43,26 @@
       transform-origin: top left;
     }
 
-    .pitch-day {
+    .slide-header {
       position: absolute;
-      top: 72px;
+      top: 48px;
       left: 88px;
       width: 880px;
-      margin: 0;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--sage);
+      display: flex;
+      align-items: center;
+      gap: 48px;
       font-size: 18px;
       font-weight: 500;
+      line-height: 24px;
       letter-spacing: 4px;
       text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .header-rule {
+      flex: 1;
+      height: 1px;
+      background: var(--sage);
     }
 
     .wordmark {
@@ -136,7 +144,11 @@
 <body>
   <main class="slide-frame" aria-label="Auri pitch deck">
     <section class="slide" aria-labelledby="slide-title">
-      <p class="pitch-day">Pitch Day / 2026</p>
+      <header class="slide-header">
+        <span>Auri</span>
+        <span class="header-rule" aria-hidden="true"></span>
+        <span>Pitch Day / 2026</span>
+      </header>
       <h1 class="wordmark" id="slide-title">auri</h1>
       <p class="tagline">The personal assistant<br>that adapts to you.</p>
       <p class="founder">Zaynab Omer<span>Founder</span></p>
