@@ -518,16 +518,22 @@
     .next-slide { background: var(--light-sage); padding: 48px 88px; }
 
     .next-title {
-      margin: 34px 0 32px;
+      position: absolute;
+      top: 154px;
+      left: 88px;
+      margin: 0;
       font-family: "Bebas Neue", sans-serif;
-      font-size: 240px;
+      font-size: 220px;
       font-weight: 400;
-      line-height: 1;
+      line-height: .94;
       letter-spacing: -2px;
     }
 
     .next-statement {
-      max-width: 1360px;
+      position: absolute;
+      top: 680px;
+      left: 88px;
+      width: 740px;
       margin: 0;
       font-size: 48px;
       font-weight: 500;
@@ -537,15 +543,15 @@
 
     .next-actions {
       position: absolute;
-      top: 620px;
-      left: 88px;
-      width: 910px;
+      top: 215px;
+      left: 1000px;
+      right: 88px;
     }
 
     .next-actions h3 {
-      margin: 0 0 32px;
+      margin: 0 0 28px;
       font-family: "Bebas Neue", sans-serif;
-      font-size: 48px;
+      font-size: 54px;
       font-weight: 400;
       line-height: 1;
       letter-spacing: 1px;
@@ -555,23 +561,24 @@
       margin: 0;
       padding: 0;
       list-style: none;
-      font-size: 32px;
-      line-height: 1.4;
+      font-size: 30px;
+      line-height: 1.45;
     }
 
-    .next-actions li { margin-bottom: 26px; }
+    .next-actions li { margin-bottom: 18px; }
+    .next-actions li:last-child { margin-bottom: 0; }
 
     .next-ask {
       position: absolute;
-      top: 600px;
-      left: 1120px;
+      top: 590px;
+      left: 1000px;
       right: 88px;
-      padding-left: 80px;
-      border-left: 1px solid var(--white);
+      padding-top: 34px;
+      border-top: 1px solid var(--white);
     }
 
     .next-ask h3 {
-      margin: 0 0 34px;
+      margin: 0 0 28px;
       font-family: "Bebas Neue", sans-serif;
       font-size: 82px;
       font-weight: 400;
@@ -583,13 +590,13 @@
       margin: 0;
       padding: 0;
       list-style: none;
-      font-size: 48px;
+      font-size: 44px;
       font-weight: 500;
       line-height: 1.3;
       letter-spacing: -1px;
     }
 
-    .next-ask li { margin-bottom: 22px; }
+    .next-ask li { margin-bottom: 18px; }
     .next-ask li:last-child { margin-bottom: 0; }
 
     .thanks-slide { background: var(--ivory); }
@@ -813,7 +820,7 @@
       <header class="editorial-header">
         <span>Auri / Pitch Day 2026</span>
       </header>
-      <h2 class="next-title" id="next-title">WHAT’S NEXT</h2>
+      <h2 class="next-title" id="next-title">WHAT’S<br>NEXT</h2>
       <p class="next-statement">Keep building Auri and turn it into a sustainable business.</p>
       <div class="next-actions">
         <h3>NEXT</h3>
