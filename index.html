@@ -128,7 +128,7 @@
 
     .problem-slide { background: var(--light-sage); padding: 48px 88px; }
 
-    .problem-header {
+    .editorial-header {
       display: flex;
       justify-content: space-between;
       padding-bottom: 24px;
@@ -200,16 +200,9 @@
       letter-spacing: -.5px;
     }
 
-    .solution-slide { background: var(--ivory); }
+    .solution-slide { background: var(--ivory); padding: 48px 88px; }
 
-    .solution-slide::before {
-      position: absolute;
-      top: 72px;
-      left: 88px;
-      right: 88px;
-      border-top: 1px solid var(--clay);
-      content: "";
-    }
+    .solution-slide .editorial-header { border-bottom-color: var(--clay); }
 
     .solution-title {
       position: absolute;
@@ -304,7 +297,7 @@
     </section>
 
     <section class="slide problem-slide" id="slide-2" aria-labelledby="problem-title" hidden>
-      <header class="problem-header">
+      <header class="editorial-header">
         <span>Auri / Pitch Day 2026</span>
       </header>
       <h2 class="problem-title" id="problem-title">THE PROBLEM</h2>
@@ -320,6 +313,9 @@
     </section>
 
     <section class="slide solution-slide" id="slide-3" aria-labelledby="solution-title" hidden>
+      <header class="editorial-header">
+        <span>Auri / Pitch Day 2026</span>
+      </header>
       <h2 class="solution-title" id="solution-title">THE<br>SOLUTION</h2>
       <p class="solution-statement">Auri helps take some of the mental work out of managing everyday life.</p>
       <ul class="solution-steps">
