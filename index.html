@@ -202,7 +202,8 @@
 
     .solution-slide { background: var(--ivory); padding: 48px 88px; }
 
-    .solution-slide .editorial-header { border-bottom-color: var(--clay); }
+    .solution-slide .editorial-header,
+    .works-slide .editorial-header { border-bottom-color: var(--clay); }
 
     .solution-title {
       position: absolute;
@@ -260,6 +261,70 @@
       margin: 0;
       font-size: 32px;
       line-height: 1.45;
+    }
+
+    .works-slide { background: var(--blush); padding: 48px 88px; }
+
+    .works-title {
+      margin: 28px 0 0;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 152px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .works-flow {
+      position: absolute;
+      top: 290px;
+      left: 88px;
+      right: 88px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 120px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .works-step { position: relative; }
+
+    .works-step:not(:last-child)::after {
+      position: absolute;
+      top: 330px;
+      right: -82px;
+      color: var(--clay);
+      font-size: 44px;
+      line-height: 1;
+      content: "→";
+    }
+
+    .works-step h3 {
+      margin: 0;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+
+    .works-step h3 span { color: var(--clay); }
+
+    .works-step figure { margin: 22px 0 0; }
+
+    .works-step img {
+      display: block;
+      height: 570px;
+      width: auto;
+      max-width: 100%;
+      margin: 0 auto;
+      object-fit: contain;
+    }
+
+    .works-step figcaption {
+      margin-top: 20px;
+      font-size: 25px;
+      line-height: 1.4;
     }
 
     .slide-marker {
@@ -335,6 +400,37 @@
       </ul>
       <p class="slide-marker" aria-label="Slide 3 of 7">03 — 07</p>
     </section>
+
+    <section class="slide works-slide" id="slide-4" aria-labelledby="works-title" hidden>
+      <header class="editorial-header">
+        <span>Auri / Pitch Day 2026</span>
+      </header>
+      <h2 class="works-title" id="works-title">HOW AURI WORKS</h2>
+      <ol class="works-flow">
+        <li class="works-step">
+          <h3><span>01 —</span> CONVERSATION</h3>
+          <figure>
+            <img src="assets/auri-conversation.jpg" alt="Auri conversation about an assignment, household tasks, and an appointment" width="720" height="1280">
+            <figcaption>Talk to Auri about what’s going on.</figcaption>
+          </figure>
+        </li>
+        <li class="works-step">
+          <h3><span>02 —</span> ORGANIZATION</h3>
+          <figure>
+            <img src="assets/auri-organization.jpg" alt="Auri Arabic study space organizing an assignment, notes, and files" width="720" height="1280">
+            <figcaption>Auri keeps track of what matters.</figcaption>
+          </figure>
+        </li>
+        <li class="works-step">
+          <h3><span>03 —</span> ADAPTATION</h3>
+          <figure>
+            <img src="assets/auri-adaptation.jpg" alt="Auri suggests trying a 15-minute time block for the Arabic assignment" width="592" height="1280">
+            <figcaption>If one approach doesn’t help, Auri can try another.</figcaption>
+          </figure>
+        </li>
+      </ol>
+      <p class="slide-marker" aria-label="Slide 4 of 7">04 — 07</p>
+    </section>
   </main>
 
   <script>
@@ -368,3 +464,4 @@
   </script>
 </body>
 </html>
+
