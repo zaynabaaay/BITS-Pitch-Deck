@@ -315,7 +315,8 @@
 
     .iphone {
       position: relative;
-      width: fit-content;
+      width: 374px;
+      height: 644px;
       margin: 0 auto;
       padding: 10px;
       border: 2px solid var(--sage);
@@ -338,15 +339,9 @@
 
     .iphone img {
       display: block;
-      height: 620px;
-      width: auto;
-      border-radius: 32px;
-    }
-
-    .works-step figcaption {
-      margin-top: 14px;
-      font-size: 20px;
-      line-height: 1.3;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .audience-slide { background: var(--ivory); padding: 48px 88px; }
@@ -512,7 +507,6 @@
             <div class="iphone">
               <img src="assets/auri-conversation.jpg" alt="Auri conversation about an assignment, household tasks, and an appointment" width="720" height="1280">
             </div>
-            <figcaption>Conversation — Talk naturally about what’s going on.</figcaption>
           </figure>
         </li>
         <li class="works-step">
@@ -521,7 +515,6 @@
             <div class="iphone">
               <img src="assets/auri-organization.jpg" alt="Auri Arabic study space organizing an assignment, notes, and files" width="720" height="1280">
             </div>
-            <figcaption>Organization — Auri keeps track of what matters.</figcaption>
           </figure>
         </li>
         <li class="works-step">
@@ -530,7 +523,6 @@
             <div class="iphone">
               <img src="assets/auri-adaptation.jpg" alt="Auri suggests trying a 15-minute time block for the Arabic assignment" width="592" height="1280">
             </div>
-            <figcaption>Adaptation — Auri tries a different approach when something isn’t helping.</figcaption>
           </figure>
         </li>
       </ol>
