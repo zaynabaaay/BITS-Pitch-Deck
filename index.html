@@ -12,6 +12,7 @@
       --white: #FFFDFC;
       --brown: #332E2C;
       --sage: #7D866B;
+      --light-sage: #A6AE90;
       --clay: #8D624E;
       --blush: #F2E3DF;
     }
@@ -124,7 +125,7 @@
 
     .slide[hidden] { display: none; }
 
-    .problem-slide { background: var(--sage); padding: 48px 88px; }
+    .problem-slide { background: var(--light-sage); padding: 48px 88px; }
 
     .problem-header {
       display: flex;
@@ -207,19 +208,6 @@
       letter-spacing: 3px;
     }
 
-    .deck-nav { position: absolute; left: 88px; bottom: 12px; display: flex; gap: 24px; }
-
-    .deck-nav button {
-      padding: 6px 0;
-      border: 0;
-      background: transparent;
-      color: var(--brown);
-      font: 500 16px "Inter", sans-serif;
-      cursor: pointer;
-    }
-
-    .deck-nav button:disabled { opacity: .35; cursor: default; }
-    .deck-nav button:focus-visible { outline: 2px solid var(--clay); outline-offset: 4px; }
   </style>
   <script>
     function resizeSlide() {
@@ -249,7 +237,6 @@
     <section class="slide problem-slide" id="slide-2" aria-labelledby="problem-title" hidden>
       <header class="problem-header">
         <span>Auri / Pitch Day 2026</span>
-        <span>The Problem</span>
       </header>
       <h2 class="problem-title" id="problem-title">THE PROBLEM</h2>
       <p class="problem-intro">Executive-functioning difficulties can make everyday life overwhelming.</p>
@@ -262,23 +249,15 @@
       <p class="problem-takeaway">The tools meant to help can become another thing to manage.</p>
       <p class="slide-marker" aria-label="Slide 2 of 7">02 — 07</p>
     </section>
-    <nav class="deck-nav" aria-label="Slide navigation">
-      <button type="button" id="previous-slide" aria-label="Previous slide">← Previous</button>
-      <button type="button" id="next-slide" aria-label="Next slide">Next →</button>
-    </nav>
   </main>
 
   <script>
     const slides = Array.from(document.querySelectorAll('.slide'));
-    const previous = document.getElementById('previous-slide');
-    const next = document.getElementById('next-slide');
     let currentSlide = 0;
 
     function showSlide(index) {
       currentSlide = Math.max(0, Math.min(index, slides.length - 1));
       slides.forEach((slide, i) => { slide.hidden = i !== currentSlide; });
-      previous.disabled = currentSlide === 0;
-      next.disabled = currentSlide === slides.length - 1;
     }
 
     function readSlideHash() {
@@ -291,8 +270,6 @@
       window.location.hash = slides[target].id;
     }
 
-    previous.addEventListener('click', () => navigateSlide(currentSlide - 1));
-    next.addEventListener('click', () => navigateSlide(currentSlide + 1));
     window.addEventListener('hashchange', readSlideHash);
     document.addEventListener('keydown', event => {
       if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
