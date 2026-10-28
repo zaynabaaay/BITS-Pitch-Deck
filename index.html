@@ -124,13 +124,13 @@
 
     .slide[hidden] { display: none; }
 
-    .problem-slide { background: var(--blush); padding: 48px 88px; }
+    .problem-slide { background: var(--sage); padding: 48px 88px; }
 
     .problem-header {
       display: flex;
       justify-content: space-between;
       padding-bottom: 24px;
-      border-bottom: 1px solid var(--clay);
+      border-bottom: 1px solid var(--white);
       font-size: 18px;
       font-weight: 500;
       letter-spacing: 3px;
@@ -138,7 +138,7 @@
     }
 
     .problem-title {
-      margin: 34px 0 30px;
+      margin: 34px 0 32px;
       font-family: "Bebas Neue", sans-serif;
       font-size: 240px;
       font-weight: 400;
@@ -147,42 +147,32 @@
     }
 
     .problem-intro {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 100px;
-      align-items: start;
-    }
-
-    .problem-intro h3 {
+      max-width: 1260px;
       margin: 0;
-      max-width: 780px;
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 58px;
-      font-weight: 400;
-      line-height: 1.08;
-    }
-
-    .problem-intro p {
-      margin: 0;
-      font-size: 29px;
-      line-height: 1.5;
+      font-size: 42px;
+      line-height: 1.4;
+      letter-spacing: -1px;
     }
 
     .problem-list {
+      position: absolute;
+      top: 610px;
+      left: 88px;
+      right: 88px;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      margin: 64px 0 58px;
+      margin: 0;
       padding: 0;
       list-style: none;
     }
 
-    .problem-list li { padding: 0 34px; border-left: 1px solid var(--clay); }
+    .problem-list li { padding: 0 34px; border-left: 1px solid var(--white); }
     .problem-list li:first-child { padding-left: 0; border-left: 0; }
 
     .problem-number {
       display: block;
-      margin-bottom: 16px;
-      color: var(--clay);
+      margin-bottom: 22px;
+      color: var(--blush);
       font-size: 20px;
       letter-spacing: 3px;
     }
@@ -190,22 +180,23 @@
     .problem-list h3 {
       margin: 0;
       font-family: "Bebas Neue", sans-serif;
-      font-size: 48px;
+      font-size: 54px;
       font-weight: 400;
       line-height: 1.08;
     }
 
-    .problem-takeaway { border-top: 1px solid var(--clay); padding-top: 28px; }
-
-    .problem-takeaway h3 {
-      margin: 0 0 15px;
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 58px;
-      font-weight: 400;
-      line-height: 1.1;
+    .problem-takeaway {
+      position: absolute;
+      left: 88px;
+      right: 88px;
+      bottom: 118px;
+      margin: 0;
+      padding-top: 30px;
+      border-top: 1px solid var(--white);
+      font-size: 36px;
+      line-height: 1.4;
+      letter-spacing: -.5px;
     }
-
-    .problem-takeaway p { max-width: 1500px; margin: 0; font-size: 28px; line-height: 1.45; }
 
     .slide-marker {
       position: absolute;
@@ -261,20 +252,14 @@
         <span>The Problem</span>
       </header>
       <h2 class="problem-title" id="problem-title">THE PROBLEM</h2>
-      <div class="problem-intro">
-        <h3>Executive-functioning difficulties can make everyday life overwhelming.</h3>
-        <p>Planning, remembering, organizing, prioritizing, getting started, and following through can require significant mental effort.</p>
-      </div>
+      <p class="problem-intro">Executive-functioning difficulties can make everyday life overwhelming.</p>
       <ol class="problem-list">
         <li><span class="problem-number">01</span><h3>Remembering<br>important things</h3></li>
         <li><span class="problem-number">02</span><h3>Organizing<br>and prioritizing</h3></li>
         <li><span class="problem-number">03</span><h3>Getting<br>started</h3></li>
         <li><span class="problem-number">04</span><h3>Following<br>through</h3></li>
       </ol>
-      <div class="problem-takeaway">
-        <h3>The tools meant to help can become another thing to manage.</h3>
-        <p>Many productivity tools still rely on the same executive-functioning skills the user is already struggling with.</p>
-      </div>
+      <p class="problem-takeaway">The tools meant to help can become another thing to manage.</p>
       <p class="slide-marker" aria-label="Slide 2 of 7">02 — 07</p>
     </section>
     <nav class="deck-nav" aria-label="Slide navigation">
