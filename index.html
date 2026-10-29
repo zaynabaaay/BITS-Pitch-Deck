@@ -348,53 +348,52 @@
       object-fit: contain;
     }
 
-    .audience-slide { background: var(--clay); color: var(--white); }
-
-    .audience-title {
-      position: absolute;
-      top: 120px;
-      left: 88px;
-      margin: 0;
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 200px;
-      font-weight: 400;
-      line-height: 1;
-      letter-spacing: -2px;
-    }
+    .audience-slide { background: var(--white); }
 
     .audience-photo {
       position: absolute;
+      top: 0;
       left: 0;
-      bottom: 0;
-      width: 1080px;
-      height: 720px;
+      width: 1000px;
+      height: 1080px;
       display: block;
-      margin: 0;
-      background: var(--ivory);
       object-fit: cover;
-      object-position: center;
+      object-position: 50% 55%;
+    }
+
+    .audience-title {
+      position: absolute;
+      top: 130px;
+      left: 1096px;
+      right: 88px;
+      margin: 0;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 170px;
+      font-weight: 400;
+      line-height: .94;
+      letter-spacing: -2px;
     }
 
     .audience-statement {
       position: absolute;
-      top: 430px;
-      left: 1168px;
+      top: 536px;
+      left: 1096px;
       right: 88px;
       margin: 0;
-      font-size: 56px;
+      font-size: 52px;
       font-weight: 500;
-      line-height: 1.2;
+      line-height: 1.25;
       letter-spacing: -1.5px;
     }
 
     .audience-focus {
       position: absolute;
-      top: 790px;
-      left: 1168px;
+      top: 786px;
+      left: 1096px;
       right: 88px;
       margin: 0;
       padding-top: 34px;
-      font-size: 30px;
+      font-size: 28px;
       line-height: 1.45;
     }
 
@@ -403,7 +402,7 @@
       top: 0;
       left: 0;
       width: 96px;
-      border-top: 1px solid var(--white);
+      border-top: 1px solid var(--clay);
       content: "";
     }
 
@@ -839,11 +838,10 @@
     </section>
 
     <section class="slide audience-slide" id="slide-6" aria-labelledby="audience-title" hidden>
-      <h2 class="audience-title" id="audience-title">WHO IT’S FOR</h2>
-      <!-- Replace this div with an img using the same class, a photo src, and descriptive alt text. -->
-      <div class="audience-photo" role="img" aria-label="Temporary photograph placeholder"></div>
+      <img class="audience-photo" src="assets/audience-photo.jpg" alt="A person surrounded by sticky notes covering their face, shirt, and the wall behind them" width="1024" height="1280">
+      <h2 class="audience-title" id="audience-title">WHO IT’S<br>FOR</h2>
       <p class="audience-statement">People who struggle with executive functioning.</p>
-      <p class="audience-focus">Our initial focus is on adults experiencing these challenges in everyday life.</p>
+      <p class="audience-focus">Auri’s initial focus is on adults who experience difficulties with everyday tasks, organization, and follow-through.</p>
       <p class="slide-marker" aria-label="Slide 6 of 9">06 — 09</p>
     </section>
 
@@ -971,5 +969,6 @@
   </script>
 </body>
 </html>
+
 
 
