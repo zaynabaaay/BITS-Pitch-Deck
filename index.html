@@ -633,88 +633,59 @@
 
     .thanks-founder span { display: block; color: var(--clay); font-size: 22px; }
 
-    .why-slide { background: var(--ivory); padding: 48px 88px; }
+    .why-slide { background: var(--white); padding: 48px 88px; }
     .why-slide .editorial-header { border-bottom-color: var(--clay); }
 
     .why-title {
       position: absolute;
-      top: 154px;
+      top: 138px;
       left: 88px;
       margin: 0;
       font-family: "Bebas Neue", sans-serif;
-      font-size: 176px;
+      font-size: 164px;
       font-weight: 400;
-      line-height: .96;
+      line-height: 1;
       letter-spacing: -2px;
     }
 
-    .why-message {
-      position: absolute;
-      top: 640px;
-      left: 88px;
-      width: 760px;
-      margin: 0;
-      font-size: 50px;
-      font-weight: 500;
-      line-height: 1.25;
-      letter-spacing: -1.5px;
-    }
-
-    .why-message span { color: var(--clay); }
-
     .why-products {
       position: absolute;
-      top: 166px;
-      left: 1000px;
+      top: 500px;
+      left: 88px;
       right: 88px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       margin: 0;
       padding: 0;
       list-style: none;
     }
 
-    .why-products li {
-      margin-right: 100px;
-      padding-top: 24px;
-      border-top: 1px solid var(--clay);
-    }
+    .why-products figure { margin: 0; text-align: center; }
 
-    .why-products li:nth-child(even) { margin-left: 100px; margin-right: 0; }
-
-    .why-products figure {
+    .why-logo-area {
       display: grid;
-      grid-template-columns: 120px 1fr;
-      gap: 28px;
-      align-items: center;
-      min-height: 144px;
-      margin: 0;
+      place-items: center;
+      width: 240px;
+      height: 240px;
+      margin: 0 auto;
     }
-
-    .why-logo-area { display: grid; place-items: center; width: 120px; height: 112px; }
 
     .why-logo {
       display: block;
-      width: 104px;
-      height: 104px;
+      width: 216px;
+      height: 216px;
       object-fit: contain;
       color-scheme: light;
     }
 
-    .why-logo-motion { width: 92px; height: 92px; }
-    .why-logo-goblin { width: 120px; height: 120px; }
+    .why-logo-motion { width: 180px; height: 180px; }
+    .why-logo-goblin { width: 240px; height: 240px; }
 
-    .why-product-name { display: block; margin-bottom: 12px; font-size: 26px; line-height: 1.2; }
-
-    .why-product-category {
-      display: block;
-      color: var(--sage);
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 58px;
-      font-weight: 400;
-      line-height: 1;
-      letter-spacing: .5px;
+    .why-products figcaption {
+      margin-top: 32px;
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 1.3;
     }
 
     .slide-marker {
@@ -829,18 +800,14 @@
       <header class="editorial-header">
         <span>Auri / Pitch Day 2026</span>
       </header>
-      <h2 class="why-title" id="why-title">COMPETITIVE<br>LANDSCAPE</h2>
-      <p class="why-message">The market has solutions.<br>The experience is still<br><span>fragmented.</span></p>
+      <h2 class="why-title" id="why-title">COMPETITIVE LANDSCAPE</h2>
       <ul class="why-products">
         <li>
           <figure>
             <div class="why-logo-area">
               <img class="why-logo" src="assets/logos/notion.png" alt="Official Notion logo" width="512" height="512">
             </div>
-            <figcaption>
-              <span class="why-product-name">Notion</span>
-              <span class="why-product-category">Organization</span>
-            </figcaption>
+            <figcaption>Notion</figcaption>
           </figure>
         </li>
         <li>
@@ -848,10 +815,7 @@
             <div class="why-logo-area">
               <img class="why-logo why-logo-motion" src="assets/logos/motion.svg" alt="Official Motion logo" width="126" height="126">
             </div>
-            <figcaption>
-              <span class="why-product-name">Motion</span>
-              <span class="why-product-category">Scheduling</span>
-            </figcaption>
+            <figcaption>Motion</figcaption>
           </figure>
         </li>
         <li>
@@ -859,10 +823,7 @@
             <div class="why-logo-area">
               <img class="why-logo" src="assets/logos/chatgpt.png" alt="Official ChatGPT logo" width="180" height="180">
             </div>
-            <figcaption>
-              <span class="why-product-name">ChatGPT</span>
-              <span class="why-product-category">AI assistance</span>
-            </figcaption>
+            <figcaption>ChatGPT</figcaption>
           </figure>
         </li>
         <li>
@@ -870,10 +831,7 @@
             <div class="why-logo-area">
               <img class="why-logo why-logo-goblin" src="assets/logos/goblin-tools.png" alt="Official Goblin.tools logo" width="144" height="144">
             </div>
-            <figcaption>
-              <span class="why-product-name">Goblin.tools</span>
-              <span class="why-product-category">Task support</span>
-            </figcaption>
+            <figcaption>Goblin.tools</figcaption>
           </figure>
         </li>
       </ul>
