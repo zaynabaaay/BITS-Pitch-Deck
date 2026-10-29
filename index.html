@@ -512,75 +512,80 @@
       letter-spacing: -2px;
     }
 
-    .next-statement {
+    .next-roadmap {
       position: absolute;
-      top: 680px;
+      top: 620px;
       left: 88px;
       width: 740px;
-      margin: 0;
-      font-size: 48px;
-      font-weight: 500;
-      line-height: 1.3;
-      letter-spacing: -1px;
     }
 
-    .next-actions {
-      position: absolute;
-      top: 215px;
-      left: 1000px;
-      right: 88px;
-    }
-
-    .next-actions h3 {
-      margin: 0 0 28px;
+    .next-roadmap h3 {
+      margin: 0 0 22px;
       font-family: "Bebas Neue", sans-serif;
-      font-size: 54px;
+      font-size: 32px;
       font-weight: 400;
       line-height: 1;
       letter-spacing: 1px;
     }
 
-    .next-actions ul {
+    .next-priorities {
       margin: 0;
-      padding: 0;
-      list-style: none;
-      font-size: 30px;
-      line-height: 1.45;
+      font-size: 42px;
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: -1px;
     }
 
-    .next-actions li { margin-bottom: 18px; }
-    .next-actions li:last-child { margin-bottom: 0; }
+    .next-roadmap-copy { margin: 24px 0 0; font-size: 24px; line-height: 1.45; }
 
-    .next-ask {
+    .next-funding {
       position: absolute;
-      top: 590px;
+      top: 166px;
       left: 1000px;
       right: 88px;
-      padding-top: 34px;
-      border-top: 1px solid var(--white);
     }
 
-    .next-ask h3 {
-      margin: 0 0 28px;
+    .next-funding h3 {
+      margin: 0;
       font-family: "Bebas Neue", sans-serif;
-      font-size: 82px;
+      font-size: 42px;
       font-weight: 400;
       line-height: 1;
       letter-spacing: 1px;
     }
 
-    .next-ask ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      font-size: 44px;
-      font-weight: 500;
-      line-height: 1.3;
-      letter-spacing: -1px;
+    .next-amount {
+      display: flex;
+      align-items: flex-end;
+      gap: 26px;
+      margin: 22px 0 0;
     }
 
-    .next-ask li { margin-bottom: 18px; }
-    .next-ask li:last-child { margin-bottom: 0; }
+    .next-amount strong {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 250px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -4px;
+    }
+
+    .next-amount span { padding-bottom: 28px; font-size: 28px; font-weight: 500; letter-spacing: 2px; }
+
+    .next-budget {
+      width: 100%;
+      margin-top: 32px;
+      border-collapse: collapse;
+      font-size: 28px;
+      line-height: 1.4;
+    }
+
+    .next-budget th { text-align: left; font-weight: 400; }
+    .next-budget td { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .next-budget th, .next-budget td { padding: 18px 0; }
+    .next-budget th { padding-right: 32px; }
+    .next-budget tbody tr + tr { border-top: 1px solid var(--white); }
+    .next-budget tfoot { border-top: 1px solid var(--clay); font-size: 32px; }
+    .next-budget tfoot th, .next-budget tfoot td { padding-top: 22px; font-weight: 500; }
 
     .thanks-slide { background: var(--ivory); }
 
@@ -883,22 +888,25 @@
         <span>Auri / Pitch Day 2026</span>
       </header>
       <h2 class="next-title" id="next-title">WHAT’S<br>NEXT</h2>
-      <p class="next-statement">Keep building Auri and turn it into a sustainable business.</p>
-      <div class="next-actions">
-        <h3>NEXT</h3>
-        <ul>
-          <li>Complete the core product experience</li>
-          <li>Continue developing adaptive support</li>
-          <li>Develop the business model and path to market</li>
-        </ul>
+      <div class="next-roadmap">
+        <h3>THE NEXT 3 MONTHS</h3>
+        <p class="next-priorities">Complete the MVP.<br>Test with users.<br>Prepare for launch.</p>
+        <p class="next-roadmap-copy">Continue MVP development, test with real users, refine the experience through feedback, and prepare for an initial App Store release.</p>
       </div>
-      <div class="next-ask">
-        <h3>LOOKING FOR</h3>
-        <ul>
-          <li>Funding</li>
-          <li>Mentorship</li>
-          <li>Strategic connections</li>
-        </ul>
+      <div class="next-funding">
+        <h3>SPARK FUND REQUEST</h3>
+        <p class="next-amount"><strong>$1,000</strong><span>CAD</span></p>
+        <table class="next-budget" aria-label="Spark Fund budget in Canadian dollars">
+          <tbody>
+            <tr><th scope="row">Claude Code — 3 months</th><td>$450</td></tr>
+            <tr><th scope="row">AI API usage</th><td>$150</td></tr>
+            <tr><th scope="row">User testing</th><td>$250</td></tr>
+            <tr><th scope="row">Apple Developer membership</th><td>$150</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><th scope="row">Total</th><td>$1,000</td></tr>
+          </tfoot>
+        </table>
       </div>
       <p class="slide-marker" aria-label="Slide 8 of 9">08 — 09</p>
     </section>
