@@ -25,6 +25,7 @@
     body {
       display: grid;
       place-items: center;
+      height: 100dvh;
       background: var(--white);
       color: var(--brown);
       font-family: "Inter", sans-serif;
@@ -701,6 +702,26 @@
       letter-spacing: 4px;
     }
 
+    .present-control {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 10;
+      padding: 8px 12px;
+      border: 1px solid var(--clay);
+      background: var(--white);
+      color: var(--brown);
+      font: 500 12px/1.2 "Inter", sans-serif;
+      letter-spacing: .5px;
+      opacity: .75;
+      cursor: pointer;
+    }
+
+    .present-control:hover, .present-control:focus-visible { opacity: 1; }
+    .present-control:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+    .present-control[hidden] { display: none; }
+    .slide-frame:focus { outline: none; }
+
     .slide-marker {
       position: absolute;
       right: 88px;
@@ -721,7 +742,7 @@
   </script>
 </head>
 <body>
-  <main class="slide-frame" aria-label="Auri pitch deck">
+  <main class="slide-frame" tabindex="-1" aria-label="Auri pitch deck">
     <section class="slide" id="slide-1" aria-labelledby="slide-title">
       <header class="slide-header">
         <span>Auri</span>
@@ -918,6 +939,7 @@
       <p class="slide-marker" aria-label="Slide 9 of 9">09 — 09</p>
     </section>
   </main>
+  <button class="present-control" id="present-control" type="button" aria-label="Present in full screen" title="Present in full screen; Escape to exit" hidden>Present</button>
 
   <script>
     const slides = Array.from(document.querySelectorAll('.slide'));
@@ -935,6 +957,7 @@
 
     function navigateSlide(index) {
       const target = Math.max(0, Math.min(index, slides.length - 1));
+      showSlide(target);
       window.location.hash = slides[target].id;
     }
 
@@ -962,15 +985,54 @@
 
     deck.addEventListener('touchcancel', () => { touchStart = null; }, { passive: true });
 
-    window.addEventListener('hashchange', readSlideHash);
-    document.addEventListener('keydown', event => {
-      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-        event.preventDefault();
-        navigateSlide(currentSlide + (event.key === 'ArrowRight' ? 1 : -1));
+    const presentButton = document.getElementById('present-control');
+    const root = document.documentElement;
+    const requestFullscreen = root.requestFullscreen || root.webkitRequestFullscreen;
+    const canPresent = Boolean(requestFullscreen)
+      && (document.fullscreenEnabled ?? document.webkitFullscreenEnabled ?? true);
+    const fullscreenElement = () => document.fullscreenElement || document.webkitFullscreenElement;
+
+    function updatePresentationMode() {
+      presentButton.hidden = !canPresent || Boolean(fullscreenElement());
+      requestAnimationFrame(resizeSlide);
+      deck.focus({ preventScroll: true });
+    }
+
+    presentButton.addEventListener('click', async () => {
+      if (!canPresent) return;
+      try {
+        await requestFullscreen.call(root);
+      } catch {
+        presentButton.title = 'Full screen is unavailable here. Keyboard and swipe navigation still work.';
+      } finally {
+        deck.focus({ preventScroll: true });
       }
     });
+
+    document.addEventListener('fullscreenchange', updatePresentationMode);
+    document.addEventListener('webkitfullscreenchange', updatePresentationMode);
+
+    const nextKeys = new Set(['ArrowRight', 'PageDown', ' ', 'Spacebar']);
+    const previousKeys = new Set(['ArrowLeft', 'PageUp', 'Backspace']);
+
+    window.addEventListener('hashchange', readSlideHash);
+    document.addEventListener('keydown', event => {
+      if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+
+      if (event.key === 'Escape' && fullscreenElement()) {
+        const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen;
+        if (exitFullscreen) Promise.resolve(exitFullscreen.call(document)).catch(() => {});
+        return;
+      }
+
+      if (event.target?.closest?.('input, textarea, select, button, a[href], [contenteditable]:not([contenteditable="false"]), video, audio')) return;
+      const step = nextKeys.has(event.key) ? 1 : previousKeys.has(event.key) ? -1 : 0;
+      if (!step) return;
+      event.preventDefault();
+      navigateSlide(currentSlide + step);
+    });
     readSlideHash();
+    updatePresentationMode();
   </script>
 </body>
 </html>
