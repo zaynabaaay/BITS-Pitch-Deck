@@ -649,7 +649,7 @@
 
     .why-products {
       position: absolute;
-      top: 500px;
+      top: 480px;
       left: 88px;
       right: 88px;
       display: grid;
@@ -678,13 +678,25 @@
     }
 
     .why-logo-motion { width: 180px; height: 180px; }
-    .why-logo-goblin { width: 240px; height: 240px; }
+    .why-logo-chatgpt { width: 232px; height: 232px; }
+    .why-logo-goblin { width: 216px; height: 216px; }
 
     .why-products figcaption {
       margin-top: 32px;
       font-size: 32px;
       font-weight: 500;
       line-height: 1.3;
+    }
+
+
+    .why-category {
+      display: block;
+      margin-top: 16px;
+      color: var(--clay);
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: 4px;
     }
 
     .slide-marker {
@@ -806,7 +818,7 @@
             <div class="why-logo-area">
               <img class="why-logo" src="assets/logos/notion.png" alt="Official Notion logo" width="512" height="512">
             </div>
-            <figcaption>Notion</figcaption>
+            <figcaption>Notion<span class="why-category">ORGANIZATION</span></figcaption>
           </figure>
         </li>
         <li>
@@ -814,15 +826,15 @@
             <div class="why-logo-area">
               <img class="why-logo why-logo-motion" src="assets/logos/motion.svg" alt="Official Motion logo" width="126" height="126">
             </div>
-            <figcaption>Motion</figcaption>
+            <figcaption>Motion<span class="why-category">SCHEDULING</span></figcaption>
           </figure>
         </li>
         <li>
           <figure>
             <div class="why-logo-area">
-              <img class="why-logo" src="assets/logos/chatgpt.png" alt="Official ChatGPT logo" width="180" height="180">
+              <img class="why-logo why-logo-chatgpt" src="assets/logos/chatgpt.png" alt="Official ChatGPT logo" width="180" height="180">
             </div>
-            <figcaption>ChatGPT</figcaption>
+            <figcaption>ChatGPT<span class="why-category">AI ASSISTANCE</span></figcaption>
           </figure>
         </li>
         <li>
@@ -830,7 +842,7 @@
             <div class="why-logo-area">
               <img class="why-logo why-logo-goblin" src="assets/logos/goblin-tools.png" alt="Official Goblin.tools logo" width="144" height="144">
             </div>
-            <figcaption>Goblin.tools</figcaption>
+            <figcaption>Goblin.tools<span class="why-category">TASK SUPPORT</span></figcaption>
           </figure>
         </li>
       </ul>
