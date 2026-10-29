@@ -650,6 +650,50 @@
 
     .thanks-founder span { display: block; color: var(--clay); font-size: 22px; }
 
+    .why-slide { background: var(--white); padding: 48px 88px; }
+    .why-slide .editorial-header { border-bottom-color: var(--clay); }
+
+    .why-title {
+      margin: 34px 0 0;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 240px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+    }
+
+    .why-products {
+      position: absolute;
+      top: 510px;
+      left: 88px;
+      right: 88px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin: 0;
+      padding: 0 0 100px;
+      border-bottom: 1px solid var(--clay);
+      list-style: none;
+    }
+
+    .why-products figure { margin: 0; text-align: center; }
+
+    .why-logo {
+      display: block;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto;
+      object-fit: contain;
+      color-scheme: light;
+    }
+
+    .why-products figcaption {
+      margin-top: 44px;
+      font-size: 34px;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
     .slide-marker {
       position: absolute;
       right: 88px;
@@ -698,7 +742,7 @@
         <li><span class="problem-number">04</span><h3>Following<br>through</h3></li>
       </ol>
       <p class="problem-takeaway">Many productivity tools still require users to organize, prioritize, and follow through—the same skills they’re already struggling with.</p>
-      <p class="slide-marker" aria-label="Slide 2 of 7">02 — 07</p>
+      <p class="slide-marker" aria-label="Slide 2 of 9">02 — 09</p>
     </section>
 
     <section class="slide solution-slide" id="slide-3" aria-labelledby="solution-title" hidden>
@@ -721,7 +765,7 @@
           <p>Auri adjusts its support based on your needs, preferences, and what works for you.</p>
         </li>
       </ul>
-      <p class="slide-marker" aria-label="Slide 3 of 7">03 — 07</p>
+      <p class="slide-marker" aria-label="Slide 3 of 9">03 — 09</p>
     </section>
 
     <section class="slide works-slide" id="slide-4" aria-labelledby="works-title" hidden>
@@ -755,10 +799,44 @@
           </figure>
         </li>
       </ol>
-      <p class="slide-marker" aria-label="Slide 4 of 7">04 — 07</p>
+      <p class="slide-marker" aria-label="Slide 4 of 9">04 — 09</p>
     </section>
 
-    <section class="slide audience-slide" id="slide-5" aria-labelledby="audience-title" hidden>
+<section class="slide why-slide" id="slide-5" aria-labelledby="why-title" hidden>
+      <header class="editorial-header">
+        <span>Auri / Pitch Day 2026</span>
+      </header>
+      <h2 class="why-title" id="why-title">Why Auri?</h2>
+      <ul class="why-products">
+        <li>
+          <figure>
+            <img class="why-logo" src="assets/logos/notion.png" alt="Official Notion logo" width="512" height="512">
+            <figcaption>Notion</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <img class="why-logo" src="assets/logos/motion.svg" alt="Official Motion logo" width="126" height="126">
+            <figcaption>Motion</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <img class="why-logo" src="assets/logos/chatgpt.png" alt="Official ChatGPT logo" width="180" height="180">
+            <figcaption>ChatGPT</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <img class="why-logo" src="assets/logos/goblin-tools.png" alt="Official Goblin.tools logo" width="144" height="144">
+            <figcaption>Goblin.tools</figcaption>
+          </figure>
+        </li>
+      </ul>
+      <p class="slide-marker" aria-label="Slide 5 of 9">05 — 09</p>
+    </section>
+
+    <section class="slide audience-slide" id="slide-6" aria-labelledby="audience-title" hidden>
       <header class="editorial-header">
         <span>Auri / Pitch Day 2026</span>
       </header>
@@ -781,10 +859,10 @@
           <li>Following through</li>
         </ul>
       </aside>
-      <p class="slide-marker" aria-label="Slide 5 of 7">05 — 07</p>
+      <p class="slide-marker" aria-label="Slide 6 of 9">06 — 09</p>
     </section>
 
-    <section class="slide progress-slide" id="slide-6" aria-labelledby="progress-title" hidden>
+    <section class="slide progress-slide" id="slide-7" aria-labelledby="progress-title" hidden>
       <header class="editorial-header">
         <span>Auri / Pitch Day 2026</span>
       </header>
@@ -817,10 +895,10 @@
         <h3>BUILT BY</h3>
         <p>Zaynab Omer<span>Computer programming and IT background</span></p>
       </div>
-      <p class="slide-marker" aria-label="Slide 6 of 7">06 — 07</p>
+      <p class="slide-marker" aria-label="Slide 7 of 9">07 — 09</p>
     </section>
 
-    <section class="slide next-slide" id="slide-7" aria-labelledby="next-title" hidden>
+    <section class="slide next-slide" id="slide-8" aria-labelledby="next-title" hidden>
       <header class="editorial-header">
         <span>Auri / Pitch Day 2026</span>
       </header>
@@ -842,14 +920,14 @@
           <li>Strategic connections</li>
         </ul>
       </div>
-      <p class="slide-marker" aria-label="Slide 7 of 8">07 — 08</p>
+      <p class="slide-marker" aria-label="Slide 8 of 9">08 — 09</p>
     </section>
 
-    <section class="slide thanks-slide" id="slide-8" aria-labelledby="thanks-title" hidden>
+    <section class="slide thanks-slide" id="slide-9" aria-labelledby="thanks-title" hidden>
       <h2 class="thanks-title" id="thanks-title">THANK YOU</h2>
       <p class="thanks-wordmark">auri</p>
       <p class="thanks-founder">Zaynab Omer<span>Founder</span></p>
-      <p class="slide-marker" aria-label="Slide 8 of 8">08 — 08</p>
+      <p class="slide-marker" aria-label="Slide 9 of 9">09 — 09</p>
     </section>
   </main>
 
@@ -908,4 +986,5 @@
   </script>
 </body>
 </html>
+
 
