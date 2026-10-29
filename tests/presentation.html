@@ -26,7 +26,7 @@
   <pre id="video-results" aria-live="polite">Video: waiting for metadata.</pre>
   <pre id="results" aria-live="polite">Loading deck and fonts…</pre>
   <pre id="fullscreen-results" aria-live="polite">Full screen: not tested. Click the test button, then press Escape.</pre>
-  <div id="stage"><iframe id="deck" title="Auri deck under test" allow="fullscreen" allowfullscreen src="../?v=35f908efbbf5#slide-4"></iframe></div>
+  <div id="stage"><iframe id="deck" title="Auri deck under test" allow="fullscreen" allowfullscreen src="../?v=video-fallback-v1#slide-4"></iframe></div>
   <script>
     const frame = document.getElementById('deck');
     const stage = document.getElementById('stage');
@@ -125,7 +125,7 @@
             + ', error=' + (video.error?.code || 'none');
         };
         const metadata = () => {
-          videoResults.textContent = 'METADATA: ' + video.videoWidth + 'x' + video.videoHeight
+          videoResults.textContent = 'METADATA: source=' + video.currentSrc + ', size=' + video.videoWidth + 'x' + video.videoHeight
             + ', duration=' + video.duration.toFixed(2)
             + ', controls=' + video.controls + ', playsInline=' + video.playsInline;
           logVideo('READY');
@@ -218,3 +218,4 @@
   </script>
 </body>
 </html>
+
