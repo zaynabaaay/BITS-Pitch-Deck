@@ -18,9 +18,14 @@
   <button id="fullscreen-test" type="button" disabled>Test deck’s Present button</button>
   <button id="landscape" type="button" disabled>Tablet landscape</button>
   <button id="portrait" type="button" disabled>Tablet portrait</button>
+  <button id="video-play" type="button" disabled>Play demo</button>
+  <button id="video-pause" type="button" disabled>Pause demo</button>
+  <button id="video-seek" type="button" disabled>Seek demo to 10s</button>
+  <button id="video-next" type="button" disabled>Test leaving video</button>
+  <pre id="video-results" aria-live="polite">Video: waiting for metadata.</pre>
   <pre id="results" aria-live="polite">Loading deck and fonts…</pre>
   <pre id="fullscreen-results" aria-live="polite">Full screen: not tested. Click the test button, then press Escape.</pre>
-  <div id="stage"><iframe id="deck" title="Auri deck under test" allow="fullscreen" allowfullscreen src="../?v=7c7b1d6d5790#slide-5"></iframe></div>
+  <div id="stage"><iframe id="deck" title="Auri deck under test" allow="fullscreen" allowfullscreen src="../?v=d1fffcd201cc#slide-4"></iframe></div>
   <script>
     const frame = document.getElementById('deck');
     const stage = document.getElementById('stage');
@@ -75,6 +80,17 @@
           const centered = Math.abs(box.left + box.width / 2 - width / 2) < 1
             && Math.abs(box.top + box.height / 2 - height / 2) < 1;
           const pass = actualViewport && aspect && fits && centered;
+          const video = doc.querySelector('.works-video');
+          if (video) {
+            const player = video.getBoundingClientRect();
+            const videoFits = player.left >= box.left - 1 && player.right <= box.right + 1
+              && player.top >= box.top - 1 && player.bottom <= box.bottom + 1;
+            const videoCentered = Math.abs(player.left + player.width / 2 - width / 2) < 1;
+            const videoAspect = Math.abs(player.width / player.height - 16 / 9) < .001;
+            report.push((videoFits && videoCentered && videoAspect ? 'PASS' : 'FAIL')
+              + ' video ' + width + 'x' + height + ': fits=' + videoFits
+              + ', centered=' + videoCentered + ', 16:9=' + videoAspect);
+          }
           report.push((pass ? 'PASS' : 'FAIL') + ' ' + width + 'x' + height
             + ': actual viewport=' + win.innerWidth + 'x' + win.innerHeight
             + ', slide=' + box.width.toFixed(1) + 'x' + box.height.toFixed(1)
@@ -88,6 +104,45 @@
       } catch (error) {
         results.textContent = 'FAIL: ' + error.message;
       }
+      const video = doc.querySelector('.works-video');
+      const videoResults = document.getElementById('video-results');
+      if (video) {
+        const logVideo = label => {
+          videoResults.textContent += '\n' + label
+            + ': time=' + video.currentTime.toFixed(2)
+            + ', paused=' + video.paused
+            + ', soundEnabled=' + (!video.muted && video.volume > 0)
+            + ', error=' + (video.error?.code || 'none');
+        };
+        const metadata = () => {
+          videoResults.textContent = 'METADATA: ' + video.videoWidth + 'x' + video.videoHeight
+            + ', duration=' + video.duration.toFixed(2)
+            + ', controls=' + video.controls + ', playsInline=' + video.playsInline;
+          logVideo('READY');
+        };
+        if (video.readyState >= 1) metadata();
+        else video.addEventListener('loadedmetadata', metadata, { once: true });
+        video.addEventListener('error', () => logVideo('MEDIA ERROR'));
+        video.addEventListener('seeked', () => logVideo('SEEK verified'));
+        const play = document.getElementById('video-play');
+        const pauseVideo = document.getElementById('video-pause');
+        const seek = document.getElementById('video-seek');
+        const next = document.getElementById('video-next');
+        for (const button of [play, pauseVideo, seek, next]) button.disabled = false;
+        play.addEventListener('click', async () => {
+          try {
+            await video.play();
+            setTimeout(() => logVideo('PLAYBACK verified'), 1200);
+          } catch (error) { videoResults.textContent += '\nPLAY FAILED: ' + error.message; }
+        });
+        pauseVideo.addEventListener('click', () => { video.pause(); logVideo('PAUSE verified'); });
+        seek.addEventListener('click', () => { video.currentTime = 10; });
+        next.addEventListener('click', () => {
+          video.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'PageDown', bubbles: true, cancelable: true }));
+          setTimeout(() => logVideo('LEAVE ' + win.location.hash), 200);
+        });
+      }
+
       fullscreenTest.addEventListener('click', () => {
         const button = doc.getElementById('present-control');
         if (button.hidden) {
