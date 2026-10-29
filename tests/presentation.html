@@ -18,6 +18,7 @@
   <button id="fullscreen-test" type="button" disabled>Test deck’s Present button</button>
   <button id="landscape" type="button" disabled>Tablet landscape</button>
   <button id="portrait" type="button" disabled>Tablet portrait</button>
+  <button id="video-suite" type="button" disabled>Run video checks</button>
   <button id="video-play" type="button" disabled>Play demo</button>
   <button id="video-pause" type="button" disabled>Pause demo</button>
   <button id="video-seek" type="button" disabled>Seek demo to 10s</button>
@@ -25,7 +26,7 @@
   <pre id="video-results" aria-live="polite">Video: waiting for metadata.</pre>
   <pre id="results" aria-live="polite">Loading deck and fonts…</pre>
   <pre id="fullscreen-results" aria-live="polite">Full screen: not tested. Click the test button, then press Escape.</pre>
-  <div id="stage"><iframe id="deck" title="Auri deck under test" allow="fullscreen" allowfullscreen src="../?v=d1fffcd201cc#slide-4"></iframe></div>
+  <div id="stage"><iframe id="deck" title="Auri deck under test" allow="fullscreen" allowfullscreen src="../?v=35f908efbbf5#slide-4"></iframe></div>
   <script>
     const frame = document.getElementById('deck');
     const stage = document.getElementById('stage');
@@ -107,6 +108,15 @@
       const video = doc.querySelector('.works-video');
       const videoResults = document.getElementById('video-results');
       if (video) {
+        const source = video.querySelector('source');
+        videoResults.textContent = 'SOURCE: ' + source.src + '\nBASE: ' + doc.baseURI
+          + '\nH264 support: ' + video.canPlayType('video/mp4; codecs="avc1.4D4029, mp4a.40.2"');
+        source.addEventListener('error', () => {
+          videoResults.textContent += '\nSOURCE ERROR: ' + source.src + ', networkState=' + video.networkState;
+        });
+        fetch(source.src, { headers: { Range: 'bytes=0-1023' } }).then(response => {
+          videoResults.textContent += '\nHTTP: ' + response.status + ' ' + response.headers.get('content-type');
+        }).catch(error => { videoResults.textContent += '\nFETCH ERROR: ' + error.message; });
         const logVideo = label => {
           videoResults.textContent += '\n' + label
             + ': time=' + video.currentTime.toFixed(2)
@@ -124,6 +134,51 @@
         else video.addEventListener('loadedmetadata', metadata, { once: true });
         video.addEventListener('error', () => logVideo('MEDIA ERROR'));
         video.addEventListener('seeked', () => logVideo('SEEK verified'));
+
+        const suite = document.getElementById('video-suite');
+        suite.disabled = false;
+        suite.addEventListener('click', async () => {
+          const waitFor = (promise, ms) => Promise.race([
+            promise,
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Timed out waiting for media')), ms))
+          ]);
+          try {
+            const before = video.currentTime;
+            const playing = video.play();
+            doc.getElementById('present-control').click();
+            await waitFor(playing, 6000);
+            await pause(1000);
+            if (video.paused || video.currentTime <= before) throw new Error('Playback did not advance');
+            logVideo('PASS PLAY in presentation full screen=' + Boolean(doc.fullscreenElement || doc.webkitFullscreenElement));
+            video.pause();
+            logVideo('PASS PAUSE');
+            const sought = new Promise(resolve => video.addEventListener('seeked', resolve, { once: true }));
+            video.currentTime = 10;
+            await waitFor(sought, 4000);
+            if (Math.abs(video.currentTime - 10) > .25) throw new Error('Seek did not reach 10 seconds');
+            logVideo('PASS SEEK to 10s');
+            await waitFor(video.play(), 4000);
+            await pause(800);
+            if (video.paused || video.currentTime <= 10) throw new Error('Playback after seek failed');
+            logVideo('PASS RESUME');
+            const exit = doc.exitFullscreen || doc.webkitExitFullscreen;
+            if ((doc.fullscreenElement || doc.webkitFullscreenElement) && exit) await exit.call(doc);
+            video.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'PageDown', bubbles: true, cancelable: true }));
+            await pause(150);
+            if (win.location.hash !== '#slide-5' || !video.paused) throw new Error('Leaving slide failed to pause video');
+            logVideo('PASS LEAVE ' + win.location.hash);
+            win.location.hash = '#slide-4';
+            await pause(150);
+            logVideo('PASS RETURN with playback position preserved');
+          } catch (error) {
+            video.pause();
+            videoResults.textContent += '\nSUITE FAILED: ' + error.message + ', readyState=' + video.readyState
+              + ', networkState=' + video.networkState + ', src=' + (video.currentSrc || source.src);
+            const exit = doc.exitFullscreen || doc.webkitExitFullscreen;
+            if ((doc.fullscreenElement || doc.webkitFullscreenElement) && exit) await exit.call(doc);
+          }
+        });
+
         const play = document.getElementById('video-play');
         const pauseVideo = document.getElementById('video-pause');
         const seek = document.getElementById('video-seek');
