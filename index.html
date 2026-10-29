@@ -280,73 +280,24 @@
       letter-spacing: -2px;
     }
 
-    .works-flow {
+    .works-demo {
       position: absolute;
-      top: 268px;
+      top: 286px;
+      bottom: 100px;
       left: 88px;
       right: 88px;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 120px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .works-step { position: relative; }
-
-    .works-step:not(:last-child)::after {
-      position: absolute;
-      top: 350px;
-      right: -76px;
-      color: var(--clay);
-      font-size: 32px;
-      line-height: 1;
-      content: "→";
-    }
-
-    .works-step h3 {
-      margin: 0;
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 36px;
-      font-weight: 400;
-      line-height: 1;
-      letter-spacing: 1px;
-    }
-
-    .works-step h3 span { color: var(--clay); }
-
-    .works-step figure { margin: 16px 0 0; }
-
-    .iphone {
-      position: relative;
-      width: 374px;
-      height: 644px;
-      margin: 0 auto;
-      padding: 10px;
-      border: 2px solid var(--sage);
-      border-radius: 44px;
-      background: var(--brown);
-      box-shadow: 0 12px 24px rgb(51 46 44 / 12%);
-    }
-
-    .iphone::before,
-    .iphone::after {
-      position: absolute;
-      width: 3px;
-      border-radius: 2px;
-      background: var(--brown);
-      content: "";
-    }
-
-    .iphone::before { top: 112px; left: -4px; height: 54px; }
-    .iphone::after { top: 138px; right: -4px; height: 70px; }
-
-    .iphone img {
+    .works-video {
       display: block;
-      width: 100%;
       height: 100%;
+      width: auto;
+      max-width: 100%;
       object-fit: contain;
+      background: var(--brown);
     }
 
     .audience-slide { background: var(--white); }
@@ -801,32 +752,12 @@
         <span>Auri / Pitch Day 2026</span>
       </header>
       <h2 class="works-title" id="works-title">HOW AURI WORKS</h2>
-      <ol class="works-flow">
-        <li class="works-step">
-          <h3><span>01 —</span> CONVERSATION</h3>
-          <figure>
-            <div class="iphone">
-              <img src="assets/auri-conversation.jpg" alt="Auri conversation about an assignment, household tasks, and an appointment" width="720" height="1280">
-            </div>
-          </figure>
-        </li>
-        <li class="works-step">
-          <h3><span>02 —</span> ORGANIZATION</h3>
-          <figure>
-            <div class="iphone">
-              <img src="assets/auri-organization.jpg" alt="Auri Arabic study space organizing an assignment, notes, and files" width="720" height="1280">
-            </div>
-          </figure>
-        </li>
-        <li class="works-step">
-          <h3><span>03 —</span> ADAPTATION</h3>
-          <figure>
-            <div class="iphone">
-              <img src="assets/auri-adaptation.jpg?v=ecdcf0ce8ef8" alt="Auri suggests trying a 15-minute time block for the Arabic assignment" width="720" height="1280">
-            </div>
-          </figure>
-        </li>
-      </ol>
+      <div class="works-demo">
+        <video class="works-video" controls playsinline preload="auto" width="1920" height="1080" aria-label="Auri product demonstration">
+          <source src="auri-demo.mp4" type="video/mp4">
+          Your browser cannot play this video. <a href="auri-demo.mp4">Open the Auri demonstration</a>.
+        </video>
+      </div>
       <p class="slide-marker" aria-label="Slide 4 of 9">04 — 09</p>
     </section>
 
@@ -947,7 +878,13 @@
 
     function showSlide(index) {
       currentSlide = Math.max(0, Math.min(index, slides.length - 1));
-      slides.forEach((slide, i) => { slide.hidden = i !== currentSlide; });
+      slides.forEach((slide, i) => {
+        const active = i === currentSlide;
+        if (!active && !slide.hidden) {
+          slide.querySelectorAll('video, audio').forEach(media => media.pause());
+        }
+        slide.hidden = !active;
+      });
     }
 
     function readSlideHash() {
@@ -966,6 +903,10 @@
     let touchStart = null;
 
     deck.addEventListener('touchstart', event => {
+      if (event.target?.closest?.('video, audio')) {
+        touchStart = null;
+        return;
+      }
       touchStart = event.touches.length === 1
         ? { x: event.touches[0].clientX, y: event.touches[0].clientY }
         : null;
@@ -993,9 +934,10 @@
     const fullscreenElement = () => document.fullscreenElement || document.webkitFullscreenElement;
 
     function updatePresentationMode() {
-      presentButton.hidden = !canPresent || Boolean(fullscreenElement());
+      const fullscreen = fullscreenElement();
+      presentButton.hidden = !canPresent || Boolean(fullscreen);
       requestAnimationFrame(resizeSlide);
-      deck.focus({ preventScroll: true });
+      if (!fullscreen || fullscreen === root) deck.focus({ preventScroll: true });
     }
 
     presentButton.addEventListener('click', async () => {
@@ -1025,7 +967,10 @@
         return;
       }
 
-      if (event.target?.closest?.('input, textarea, select, button, a[href], [contenteditable]:not([contenteditable="false"]), video, audio')) return;
+      if (event.target?.closest?.('input, textarea, select, button, a[href], [contenteditable]:not([contenteditable="false"])')) return;
+      const mediaTarget = event.target?.closest?.('video, audio');
+      if (mediaTarget && (fullscreenElement() === mediaTarget
+        || !['PageDown', 'PageUp', 'Backspace'].includes(event.key))) return;
       const step = nextKeys.has(event.key) ? 1 : previousKeys.has(event.key) ? -1 : 0;
       if (!step) return;
       event.preventDefault();
