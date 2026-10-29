@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auri presentation checks</title>
+  <style>
+    body { margin: 20px; font: 14px/1.5 system-ui, sans-serif; color: #332E2C; background: #FFFDFC; }
+    button { margin: 0 8px 12px 0; padding: 8px 12px; }
+    pre { white-space: pre-wrap; }
+    #stage { overflow: hidden; margin-top: 16px; border: 1px solid #7D866B; }
+    iframe { display: block; border: 0; transform-origin: top left; }
+  </style>
+</head>
+<body>
+  <h1>Presentation checks</h1>
+  <p>This separate test page renders the unchanged deck in actual browser viewports.</p>
+  <button id="fullscreen-test" type="button" disabled>Test deck’s Present button</button>
+  <button id="landscape" type="button" disabled>Tablet landscape</button>
+  <button id="portrait" type="button" disabled>Tablet portrait</button>
+  <pre id="results" aria-live="polite">Loading deck and fonts…</pre>
+  <pre id="fullscreen-results" aria-live="polite">Full screen: not tested. Click the test button, then press Escape.</pre>
+  <div id="stage"><iframe id="deck" title="Auri deck under test" allow="fullscreen" allowfullscreen src="../?v=7c7b1d6d5790#slide-5"></iframe></div>
+  <script>
+    const frame = document.getElementById('deck');
+    const stage = document.getElementById('stage');
+    const results = document.getElementById('results');
+    const fullscreenResults = document.getElementById('fullscreen-results');
+    const fullscreenTest = document.getElementById('fullscreen-test');
+    const landscape = document.getElementById('landscape');
+    const portrait = document.getElementById('portrait');
+    const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    function viewport(width, height) {
+      frame.style.width = width + 'px';
+      frame.style.height = height + 'px';
+      const scale = Math.min(1, (window.innerWidth - 44) / width, 600 / height);
+      frame.style.transform = 'scale(' + scale + ')';
+      stage.style.width = width * scale + 'px';
+      stage.style.height = height * scale + 'px';
+    }
+
+    frame.addEventListener('load', async () => {
+      const win = frame.contentWindow;
+      const doc = frame.contentDocument;
+      let enteredFullscreen = false;
+      function recordFullscreen() {
+        const child = doc.fullscreenElement || doc.webkitFullscreenElement;
+        const parent = document.fullscreenElement || document.webkitFullscreenElement;
+        if (child) {
+          enteredFullscreen = true;
+          fullscreenResults.textContent = 'ENTER verified: child fullscreenElement=' + child.tagName
+            + ', parent fullscreenElement=' + (parent?.tagName || 'none')
+            + ', deck Present hidden=' + doc.getElementById('present-control').hidden;
+        } else if (enteredFullscreen) {
+          fullscreenResults.textContent += '\nEXIT verified: child fullscreenElement=none'
+            + ', deck Present hidden=' + doc.getElementById('present-control').hidden;
+        }
+      }
+      for (const event of ['fullscreenchange', 'webkitfullscreenchange']) {
+        document.addEventListener(event, recordFullscreen);
+        doc.addEventListener(event, recordFullscreen);
+      }
+      try {
+        await doc.fonts.ready;
+        const report = [];
+        for (const [width, height] of [[1920,1080],[1366,768],[3440,1440],[1024,768],[768,1024]]) {
+          viewport(width, height);
+          await pause(180);
+          const box = doc.querySelector('.slide-frame').getBoundingClientRect();
+          const actualViewport = win.innerWidth === width && win.innerHeight === height;
+          const aspect = Math.abs(box.width / box.height - 16 / 9) < .001;
+          const fits = box.left >= -1 && box.top >= -1
+            && box.right <= width + 1 && box.bottom <= height + 1;
+          const centered = Math.abs(box.left + box.width / 2 - width / 2) < 1
+            && Math.abs(box.top + box.height / 2 - height / 2) < 1;
+          const pass = actualViewport && aspect && fits && centered;
+          report.push((pass ? 'PASS' : 'FAIL') + ' ' + width + 'x' + height
+            + ': actual viewport=' + win.innerWidth + 'x' + win.innerHeight
+            + ', slide=' + box.width.toFixed(1) + 'x' + box.height.toFixed(1)
+            + ', centered=' + centered + ', fits=' + fits + ', 16:9=' + aspect);
+        }
+        results.textContent = report.join('\n');
+        viewport(1024,768);
+        fullscreenTest.disabled = false;
+        landscape.disabled = false;
+        portrait.disabled = false;
+      } catch (error) {
+        results.textContent = 'FAIL: ' + error.message;
+      }
+      fullscreenTest.addEventListener('click', () => {
+        const button = doc.getElementById('present-control');
+        if (button.hidden) {
+          fullscreenResults.textContent = 'Full screen unavailable: deck Present button is hidden in this browser.';
+          return;
+        }
+        const hashBefore = win.location.hash;
+        button.click();
+        setTimeout(() => {
+          const child = doc.fullscreenElement || doc.webkitFullscreenElement;
+          fullscreenResults.textContent += '\nSlide unchanged by Present=' + (hashBefore === win.location.hash);
+          if (!child) fullscreenResults.textContent += '\nNo full screen entered: ' + button.title;
+        }, 500);
+      });
+      landscape.addEventListener('click', () => viewport(1024,768));
+      portrait.addEventListener('click', () => viewport(768,1024));
+    }, { once: true });
+  </script>
+</body>
+</html>
