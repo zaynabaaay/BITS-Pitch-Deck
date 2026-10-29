@@ -204,7 +204,6 @@
 
     .solution-slide .editorial-header,
     .works-slide .editorial-header,
-    .audience-slide .editorial-header,
     .progress-slide .editorial-header { border-bottom-color: var(--clay); }
 
     .solution-title {
@@ -349,80 +348,64 @@
       object-fit: contain;
     }
 
-    .audience-slide { background: var(--ivory); padding: 48px 88px; }
+    .audience-slide { background: var(--clay); color: var(--white); }
 
     .audience-title {
       position: absolute;
-      top: 134px;
+      top: 120px;
       left: 88px;
       margin: 0;
       font-family: "Bebas Neue", sans-serif;
-      font-size: 220px;
+      font-size: 200px;
       font-weight: 400;
       line-height: 1;
       letter-spacing: -2px;
     }
 
+    .audience-photo {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 1080px;
+      height: 720px;
+      display: block;
+      margin: 0;
+      background: var(--ivory);
+      object-fit: cover;
+      object-position: center;
+    }
+
     .audience-statement {
       position: absolute;
-      top: 420px;
-      left: 88px;
-      width: 1000px;
-      margin: 0;
-      font-size: 48px;
-      font-weight: 500;
-      line-height: 1.3;
-      letter-spacing: -1px;
-    }
-
-    .audience-initial { position: absolute; top: 638px; left: 88px; width: 1000px; }
-    .audience-longer { position: absolute; top: 856px; left: 88px; width: 1000px; }
-
-    .audience-slide h3 {
-      margin: 0 0 18px;
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 42px;
-      font-weight: 400;
-      line-height: 1;
-      letter-spacing: 1px;
-    }
-
-    .audience-initial h3 { color: var(--clay); }
-    .audience-initial p { margin: 0; font-size: 30px; line-height: 1.45; }
-
-    .audience-longer {
-      padding-top: 24px;
-      border-top: 1px solid var(--clay);
-    }
-
-    .audience-longer h3 { font-size: 34px; }
-    .audience-longer p { margin: 0; font-size: 26px; line-height: 1.45; }
-
-    .audience-challenges {
-      position: absolute;
-      top: 420px;
+      top: 430px;
+      left: 1168px;
       right: 88px;
-      width: 572px;
-      padding-left: 64px;
-      border-left: 1px solid var(--clay);
+      margin: 0;
+      font-size: 56px;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -1.5px;
     }
 
-    .audience-challenges h3 { font-size: 44px; }
-
-    .audience-challenges ul {
-      margin: 38px 0 0;
-      padding: 0;
-      list-style: none;
+    .audience-focus {
+      position: absolute;
+      top: 790px;
+      left: 1168px;
+      right: 88px;
+      margin: 0;
+      padding-top: 34px;
+      font-size: 30px;
+      line-height: 1.45;
     }
 
-    .audience-challenges li {
-      padding: 22px 0;
-      border-bottom: 1px solid var(--clay);
-      font-size: 28px;
-      line-height: 1.35;
+    .audience-focus::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 96px;
+      border-top: 1px solid var(--white);
+      content: "";
     }
-
-    .audience-challenges li:first-child { padding-top: 0; }
 
     .progress-slide { background: var(--blush); padding: 48px 88px; }
 
@@ -837,28 +820,11 @@
     </section>
 
     <section class="slide audience-slide" id="slide-6" aria-labelledby="audience-title" hidden>
-      <header class="editorial-header">
-        <span>Auri / Pitch Day 2026</span>
-      </header>
       <h2 class="audience-title" id="audience-title">WHO IT’S FOR</h2>
-      <p class="audience-statement">Auri is starting with people who struggle with executive functioning.</p>
-      <div class="audience-initial">
-        <h3>INITIAL AUDIENCE</h3>
-        <p>Adults with executive-functioning difficulties, particularly neurodivergent adults and people with ADHD.</p>
-      </div>
-      <div class="audience-longer">
-        <h3>LONGER TERM</h3>
-        <p>Auri can support a broader range of people who benefit from more individualized assistance.</p>
-      </div>
-      <aside class="audience-challenges" aria-labelledby="challenges-title">
-        <h3 id="challenges-title">COMMON CHALLENGES</h3>
-        <ul>
-          <li>Remembering important things</li>
-          <li>Organizing and prioritizing</li>
-          <li>Getting started</li>
-          <li>Following through</li>
-        </ul>
-      </aside>
+      <!-- Replace this div with an img using the same class, a photo src, and descriptive alt text. -->
+      <div class="audience-photo" role="img" aria-label="Temporary photograph placeholder"></div>
+      <p class="audience-statement">People who struggle with executive functioning.</p>
+      <p class="audience-focus">Our initial focus is on adults experiencing these challenges in everyday life.</p>
       <p class="slide-marker" aria-label="Slide 6 of 9">06 — 09</p>
     </section>
 
