@@ -26,7 +26,7 @@
   <pre id="video-results" aria-live="polite">Video: waiting for metadata.</pre>
   <pre id="results" aria-live="polite">Loading deck and fonts…</pre>
   <pre id="fullscreen-results" aria-live="polite">Full screen: not tested. Click the test button, then press Escape.</pre>
-  <div id="stage"><iframe id="deck" title="Auri deck under test" allow="autoplay; fullscreen" allowfullscreen src="../?v=autoplay-f979ddb#slide-4"></iframe></div>
+  <div id="stage"><iframe id="deck" title="Auri deck under test" allow="autoplay; fullscreen" allowfullscreen src="../?v=clean-2a152a6#slide-4"></iframe></div>
   <script>
     const frame = document.getElementById('deck');
     const stage = document.getElementById('stage');
@@ -120,9 +120,20 @@
         const logVideo = label => {
           videoResults.textContent += '\n' + label
             + ': time=' + video.currentTime.toFixed(2)
-            + ', paused=' + video.paused + ', muted=' + video.muted + ', autoplay=' + video.autoplay
+            + ', paused=' + video.paused + ', controls=' + video.controls + ', videoFocused=' + (doc.activeElement === video) + ', muted=' + video.muted + ', autoplay=' + video.autoplay
             + ', soundEnabled=' + (!video.muted && video.volume > 0)
             + ', error=' + (video.error?.code || 'none');
+        };
+        const verifyCleanVideo = () => {
+          const style = win.getComputedStyle(video);
+          video.focus();
+          if (video.controls || video.tabIndex !== -1 || style.pointerEvents !== 'none' || doc.activeElement === video) {
+            throw new Error('Video controls, pointer targeting, or focus are still enabled');
+          }
+          const rect = video.getBoundingClientRect();
+          if (doc.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2) === video) {
+            throw new Error('Video still receives pointer hits');
+          }
         };
         const metadata = () => {
           videoResults.textContent = 'METADATA: source=' + video.currentSrc + ', size=' + video.videoWidth + 'x' + video.videoHeight
@@ -150,6 +161,7 @@
             deck.dispatchEvent(end);
           };
           const playing = async label => {
+            verifyCleanVideo();
             await pause(1000);
             if (win.location.hash !== '#slide-4' || video.paused || !video.muted
               || !video.playsInline || video.currentTime <= 0 || video.currentTime > 4) {
@@ -202,6 +214,10 @@
         });
 
         setTimeout(() => {
+          try {
+            verifyCleanVideo();
+            logVideo('PASS NO CONTROLS OR VIDEO FOCUS');
+          } catch (error) { videoResults.textContent += '\nCLEAN VIDEO FAILED: ' + error.message; }
           logVideo(!video.paused && video.muted && video.playsInline && video.currentTime > 0
             ? 'PASS INITIAL MUTED INLINE AUTOPLAY' : 'INITIAL AUTOPLAY NOT OBSERVED');
         }, 1200);
