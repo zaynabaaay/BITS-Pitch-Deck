@@ -753,7 +753,7 @@
       </header>
       <h2 class="works-title" id="works-title">HOW AURI WORKS</h2>
       <div class="works-demo">
-        <video class="works-video" controls playsinline preload="auto" width="1920" height="1080" aria-label="Auri product demonstration">
+        <video class="works-video" controls muted playsinline preload="auto" width="1920" height="1080" aria-label="Auri product demonstration">
           <source src="/BITS-Pitch-Deck/auri-demo.mp4" type='video/mp4; codecs="avc1.4D4029, mp4a.40.2"'>
           <source src="/BITS-Pitch-Deck/assets/auri-demo.webm" type='video/webm; codecs="vp9, opus"'>
           Your browser cannot play this video. <a href="/BITS-Pitch-Deck/auri-demo.mp4">Open the Auri demonstration</a>.
@@ -881,10 +881,20 @@
       currentSlide = Math.max(0, Math.min(index, slides.length - 1));
       slides.forEach((slide, i) => {
         const active = i === currentSlide;
-        if (!active && !slide.hidden) {
-          slide.querySelectorAll('video, audio').forEach(media => media.pause());
-        }
+        const changed = slide.hidden === active;
         slide.hidden = !active;
+        if (!changed) return;
+
+        if (!active) slide.querySelectorAll('video, audio').forEach(media => media.pause());
+        const demo = slide.querySelector('.works-video');
+        if (demo) {
+          demo.autoplay = active;
+          demo.currentTime = 0;
+          if (active) {
+            demo.muted = true;
+            demo.play().catch(() => {});
+          }
+        }
       });
     }
 
