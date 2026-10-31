@@ -18,15 +18,11 @@
   <button id="fullscreen-test" type="button" disabled>Test deck’s Present button</button>
   <button id="landscape" type="button" disabled>Tablet landscape</button>
   <button id="portrait" type="button" disabled>Tablet portrait</button>
-  <button id="video-suite" type="button" disabled>Run autoplay checks</button>
-  <button id="video-play" type="button" disabled>Play demo</button>
-  <button id="video-pause" type="button" disabled>Pause demo</button>
-  <button id="video-seek" type="button" disabled>Seek demo to 10s</button>
-  <button id="video-next" type="button" disabled>Test leaving video</button>
-  <pre id="video-results" aria-live="polite">Video: waiting for metadata.</pre>
+  <button id="navigation-test" type="button" disabled>Test all nine slides</button>
+  <pre id="navigation-results" aria-live="polite">Navigation: not tested.</pre>
   <pre id="results" aria-live="polite">Loading deck and fonts…</pre>
   <pre id="fullscreen-results" aria-live="polite">Full screen: not tested. Click the test button, then press Escape.</pre>
-  <div id="stage"><iframe id="deck" title="Auri deck under test" allow="autoplay; fullscreen" allowfullscreen src="../?v=clean-2a152a6#slide-4"></iframe></div>
+  <div id="stage"><iframe id="deck" title="Auri deck under test" allow="autoplay; fullscreen" allowfullscreen src="../?v=nine-slides#slide-1"></iframe></div>
   <script>
     const frame = document.getElementById('deck');
     const stage = document.getElementById('stage');
@@ -81,17 +77,6 @@
           const centered = Math.abs(box.left + box.width / 2 - width / 2) < 1
             && Math.abs(box.top + box.height / 2 - height / 2) < 1;
           const pass = actualViewport && aspect && fits && centered;
-          const video = doc.querySelector('.works-video');
-          if (video) {
-            const player = video.getBoundingClientRect();
-            const videoFits = player.left >= box.left - 1 && player.right <= box.right + 1
-              && player.top >= box.top - 1 && player.bottom <= box.bottom + 1;
-            const videoCentered = Math.abs(player.left + player.width / 2 - width / 2) < 1;
-            const videoAspect = Math.abs(player.width / player.height - 16 / 9) < .001;
-            report.push((videoFits && videoCentered && videoAspect ? 'PASS' : 'FAIL')
-              + ' video ' + width + 'x' + height + ': fits=' + videoFits
-              + ', centered=' + videoCentered + ', 16:9=' + videoAspect);
-          }
           report.push((pass ? 'PASS' : 'FAIL') + ' ' + width + 'x' + height
             + ': actual viewport=' + win.innerWidth + 'x' + win.innerHeight
             + ', slide=' + box.width.toFixed(1) + 'x' + box.height.toFixed(1)
@@ -105,141 +90,45 @@
       } catch (error) {
         results.textContent = 'FAIL: ' + error.message;
       }
-      const video = doc.querySelector('.works-video');
-      const videoResults = document.getElementById('video-results');
-      if (video) {
-        const source = video.querySelector('source');
-        videoResults.textContent = 'SOURCE: ' + source.src + '\nBASE: ' + doc.baseURI
-          + '\nH264 support: ' + video.canPlayType('video/mp4; codecs="avc1.4D4029, mp4a.40.2"');
-        source.addEventListener('error', () => {
-          videoResults.textContent += '\nSOURCE ERROR: ' + source.src + ', networkState=' + video.networkState;
-        });
-        fetch(source.src, { headers: { Range: 'bytes=0-1023' } }).then(response => {
-          videoResults.textContent += '\nHTTP: ' + response.status + ' ' + response.headers.get('content-type');
-        }).catch(error => { videoResults.textContent += '\nFETCH ERROR: ' + error.message; });
-        const logVideo = label => {
-          videoResults.textContent += '\n' + label
-            + ': time=' + video.currentTime.toFixed(2)
-            + ', paused=' + video.paused + ', controls=' + video.controls + ', videoFocused=' + (doc.activeElement === video) + ', muted=' + video.muted + ', autoplay=' + video.autoplay
-            + ', soundEnabled=' + (!video.muted && video.volume > 0)
-            + ', error=' + (video.error?.code || 'none');
+      const navigationTest = document.getElementById('navigation-test');
+      navigationTest.disabled = false;
+      navigationTest.addEventListener('click', async () => {
+        const report = document.getElementById('navigation-results');
+        const deck = doc.querySelector('.slide-frame');
+        const slides = Array.from(doc.querySelectorAll('.slide'));
+        const key = name => doc.dispatchEvent(new win.KeyboardEvent('keydown', { key: name, bubbles: true, cancelable: true }));
+        const check = index => {
+          const visible = slides.filter(slide => !slide.hidden);
+          if (visible.length !== 1 || visible[0].id !== 'slide-' + index) throw new Error('Expected slide ' + index);
         };
-        const verifyCleanVideo = () => {
-          const style = win.getComputedStyle(video);
-          video.focus();
-          if (video.controls || video.tabIndex !== -1 || style.pointerEvents !== 'none' || doc.activeElement === video) {
-            throw new Error('Video controls, pointer targeting, or focus are still enabled');
-          }
-          const rect = video.getBoundingClientRect();
-          if (doc.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2) === video) {
-            throw new Error('Video still receives pointer hits');
-          }
+        const swipe = dx => {
+          const start = new win.Event('touchstart', { bubbles: true });
+          Object.defineProperty(start, 'touches', { value: [{ clientX: 300, clientY: 300 }] });
+          deck.dispatchEvent(start);
+          const end = new win.Event('touchend', { bubbles: true });
+          Object.defineProperty(end, 'touches', { value: [] });
+          Object.defineProperty(end, 'changedTouches', { value: [{ clientX: 300 + dx, clientY: 300 }] });
+          deck.dispatchEvent(end);
         };
-        const metadata = () => {
-          videoResults.textContent = 'METADATA: source=' + video.currentSrc + ', size=' + video.videoWidth + 'x' + video.videoHeight
-            + ', duration=' + video.duration.toFixed(2)
-            + ', controls=' + video.controls + ', playsInline=' + video.playsInline;
-          logVideo('READY');
-        };
-        if (video.readyState >= 1) metadata();
-        else video.addEventListener('loadedmetadata', metadata, { once: true });
-        video.addEventListener('error', () => logVideo('MEDIA ERROR'));
-        video.addEventListener('seeked', () => logVideo('SEEK verified'));
-
-        const suite = document.getElementById('video-suite');
-        suite.disabled = false;
-        suite.addEventListener('click', async () => {
-          const deck = doc.querySelector('.slide-frame');
-          const key = name => doc.dispatchEvent(new win.KeyboardEvent('keydown', { key: name, bubbles: true, cancelable: true }));
-          const swipe = dx => {
-            const start = new win.Event('touchstart', { bubbles: true });
-            Object.defineProperty(start, 'touches', { value: [{ clientX: 300, clientY: 300 }] });
-            deck.dispatchEvent(start);
-            const end = new win.Event('touchend', { bubbles: true });
-            Object.defineProperty(end, 'touches', { value: [] });
-            Object.defineProperty(end, 'changedTouches', { value: [{ clientX: 300 + dx, clientY: 300 }] });
-            deck.dispatchEvent(end);
-          };
-          const playing = async label => {
-            verifyCleanVideo();
-            await pause(1000);
-            if (win.location.hash !== '#slide-4' || video.paused || !video.muted
-              || !video.playsInline || video.currentTime <= 0 || video.currentTime > 4) {
-              throw new Error(label + ' did not restart muted inline from the beginning');
-            }
-            logVideo('PASS ' + label);
-          };
-          const left = async (label, hash) => {
-            await pause(120);
-            if (win.location.hash !== hash || !video.paused || video.currentTime > .05 || video.autoplay) {
-              throw new Error(label + ' did not pause/reset');
-            }
-            logVideo('PASS ' + label);
-          };
-          try {
-            win.location.hash = '#slide-3';
-            await pause(120);
-            doc.getElementById('present-control').click();
-            key('PageDown');
-            await playing('CLICKER ENTRY');
-            const before = video.currentTime;
-            win.dispatchEvent(new win.Event('hashchange'));
-            await pause(400);
-            if (video.currentTime <= before) throw new Error('Duplicate hash event restarted playback');
-            logVideo('PASS NO DUPLICATE RESTART');
-            key('PageDown');
-            await left('CLICKER EXIT', '#slide-5');
-            key('PageUp');
-            await playing('CLICKER RETURN');
-            swipe(120);
-            await left('SYNTHETIC SWIPE EXIT', '#slide-3');
-            swipe(-120);
-            await playing('SYNTHETIC SWIPE RETURN');
-            key('ArrowRight');
-            await left('ARROW EXIT', '#slide-5');
-            key('ArrowLeft');
-            await playing('ARROW RETURN');
-            key(' ');
-            await left('SPACE EXIT', '#slide-5');
-            key('Backspace');
-            await playing('BACKSPACE RETURN');
-            const exit = doc.exitFullscreen || doc.webkitExitFullscreen;
-            if ((doc.fullscreenElement || doc.webkitFullscreenElement) && exit) await exit.call(doc);
-            logVideo('PASS AUTOPLAY SUITE COMPLETE');
-          } catch (error) {
-            videoResults.textContent += '\nAUTOPLAY SUITE FAILED: ' + error.message;
-            const exit = doc.exitFullscreen || doc.webkitExitFullscreen;
-            if ((doc.fullscreenElement || doc.webkitFullscreenElement) && exit) await exit.call(doc);
+        try {
+          if (slides.length !== 9 || doc.querySelector('video')) throw new Error('Unexpected slide count or video');
+          win.location.hash = '#slide-1';
+          await pause(100);
+          for (const next of ['ArrowRight', 'PageDown', ' ']) {
+            for (let i = 2; i <= 9; i++) { key(next); check(i); }
+            key(next); check(9);
+            for (let i = 8; i >= 1; i--) { key('PageUp'); check(i); }
           }
-        });
-
-        setTimeout(() => {
-          try {
-            verifyCleanVideo();
-            logVideo('PASS NO CONTROLS OR VIDEO FOCUS');
-          } catch (error) { videoResults.textContent += '\nCLEAN VIDEO FAILED: ' + error.message; }
-          logVideo(!video.paused && video.muted && video.playsInline && video.currentTime > 0
-            ? 'PASS INITIAL MUTED INLINE AUTOPLAY' : 'INITIAL AUTOPLAY NOT OBSERVED');
-        }, 1200);
-
-        const play = document.getElementById('video-play');
-        const pauseVideo = document.getElementById('video-pause');
-        const seek = document.getElementById('video-seek');
-        const next = document.getElementById('video-next');
-        for (const button of [play, pauseVideo, seek, next]) button.disabled = false;
-        play.addEventListener('click', async () => {
-          try {
-            await video.play();
-            setTimeout(() => logVideo('PLAYBACK verified'), 1200);
-          } catch (error) { videoResults.textContent += '\nPLAY FAILED: ' + error.message; }
-        });
-        pauseVideo.addEventListener('click', () => { video.pause(); logVideo('PAUSE verified'); });
-        seek.addEventListener('click', () => { video.currentTime = 10; });
-        next.addEventListener('click', () => {
-          video.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'PageDown', bubbles: true, cancelable: true }));
-          setTimeout(() => logVideo('LEAVE ' + win.location.hash), 200);
-        });
-      }
+          for (let i = 2; i <= 9; i++) { swipe(-120); check(i); }
+          swipe(-120); check(9);
+          for (let i = 8; i >= 1; i--) { swipe(120); check(i); }
+          swipe(120); check(1);
+          key('Backspace'); check(1);
+          key('ArrowRight'); check(2);
+          key('ArrowLeft'); check(1);
+          report.textContent = 'PASS: nine slides; keyboard/clicker and synthetic swipe navigation in both directions; first/last boundaries; no video.';
+        } catch (error) { report.textContent = 'FAIL: ' + error.message; }
+      });
 
       fullscreenTest.addEventListener('click', () => {
         const button = doc.getElementById('present-control');
@@ -261,4 +150,3 @@
   </script>
 </body>
 </html>
-
