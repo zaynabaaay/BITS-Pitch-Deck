@@ -460,54 +460,28 @@
 
     .progress-findings p { margin: 0; font-size: 28px; line-height: 1.45; }
 
-    .next-slide { background: var(--light-sage); padding: 48px 88px; }
+    .funding-slide { background: var(--light-sage); padding: 48px 88px; }
 
-    .next-title {
-      position: absolute;
-      top: 154px;
-      left: 88px;
-      margin: 0;
+    .funding-title {
+      margin: 34px 0 0;
       font-family: "Bebas Neue", sans-serif;
       font-size: 220px;
       font-weight: 400;
-      line-height: .94;
+      line-height: 1;
       letter-spacing: -2px;
     }
 
-    .next-roadmap {
+    .funding-sections {
       position: absolute;
-      top: 620px;
+      top: 410px;
       left: 88px;
-      width: 740px;
-    }
-
-    .next-roadmap h3 {
-      margin: 0 0 22px;
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 32px;
-      font-weight: 400;
-      line-height: 1;
-      letter-spacing: 1px;
-    }
-
-    .next-priorities {
-      margin: 0;
-      font-size: 42px;
-      font-weight: 500;
-      line-height: 1.25;
-      letter-spacing: -1px;
-    }
-
-    .next-roadmap-copy { margin: 24px 0 0; font-size: 24px; line-height: 1.45; }
-
-    .next-funding {
-      position: absolute;
-      top: 166px;
-      left: 1000px;
       right: 88px;
+      display: grid;
+      grid-template-columns: 680px 1fr;
+      gap: 144px;
     }
 
-    .next-funding h3 {
+    .funding-sections h3 {
       margin: 0;
       font-family: "Bebas Neue", sans-serif;
       font-size: 42px;
@@ -516,38 +490,86 @@
       letter-spacing: 1px;
     }
 
-    .next-amount {
+    .funding-amount {
       display: flex;
-      align-items: flex-end;
-      gap: 26px;
-      margin: 22px 0 0;
+      align-items: baseline;
+      gap: 24px;
+      margin: 18px 0 24px;
     }
 
-    .next-amount strong {
+    .funding-amount strong {
       font-family: "Bebas Neue", sans-serif;
-      font-size: 250px;
+      font-size: 148px;
       font-weight: 400;
       line-height: 1;
-      letter-spacing: -4px;
+      letter-spacing: -2px;
     }
 
-    .next-amount span { padding-bottom: 28px; font-size: 28px; font-weight: 500; letter-spacing: 2px; }
+    .funding-amount span { font-size: 24px; letter-spacing: 2px; }
+    .funding-request .funding-amount { margin-top: 4px; }
+    .funding-request .funding-amount strong { font-size: 240px; letter-spacing: -4px; }
 
-    .next-budget {
+    .funding-budget {
       width: 100%;
-      margin-top: 32px;
       border-collapse: collapse;
-      font-size: 28px;
+      font-size: 26px;
       line-height: 1.4;
     }
 
-    .next-budget th { text-align: left; font-weight: 400; }
-    .next-budget td { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .next-budget th, .next-budget td { padding: 18px 0; }
-    .next-budget th { padding-right: 32px; }
-    .next-budget tbody tr + tr { border-top: 1px solid var(--white); }
-    .next-budget tfoot { border-top: 1px solid var(--clay); font-size: 32px; }
-    .next-budget tfoot th, .next-budget tfoot td { padding-top: 22px; font-weight: 500; }
+    .funding-budget th { text-align: left; font-weight: 400; padding-right: 28px; }
+    .funding-budget td { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .funding-budget th, .funding-budget td { padding-top: 19px; padding-bottom: 19px; }
+    .funding-budget tr { border-top: 1px solid var(--white); }
+    .funding-note { max-width: 650px; margin: 30px 0 0; font-size: 24px; line-height: 1.45; }
+
+    .roadmap-slide { background: var(--ivory); padding: 48px 88px; }
+    .roadmap-slide .editorial-header { border-bottom-color: var(--clay); }
+
+    .roadmap-title {
+      margin: 34px 0 0;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 164px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .roadmap-stages {
+      position: absolute;
+      top: 398px;
+      left: 88px;
+      right: 88px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 72px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .roadmap-stages li { position: relative; padding-top: 24px; border-top: 1px solid var(--sage); }
+    .roadmap-stages li:nth-child(2) { margin-top: 90px; }
+    .roadmap-stages li:nth-child(3) { margin-top: 180px; }
+    .roadmap-stages li:not(:last-child)::after {
+      position: absolute;
+      top: -19px;
+      right: -48px;
+      color: var(--clay);
+      font-size: 28px;
+      content: "→";
+    }
+
+    .roadmap-month { margin: 0 0 30px; color: var(--clay); font-size: 20px; letter-spacing: 4px; }
+    .roadmap-stages h3 {
+      min-height: 100px;
+      margin: 0 0 22px;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 96px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+    .roadmap-stages p:last-child { max-width: 490px; margin: 0; font-size: 28px; line-height: 1.45; }
 
     .thanks-slide { background: var(--ivory); }
 
@@ -731,7 +753,7 @@
         <li><span class="problem-number">04</span><h3>Following<br>through</h3></li>
       </ol>
       <p class="problem-takeaway">Many productivity tools still require users to organize, prioritize, and follow through—the same skills they’re already struggling with.</p>
-      <p class="slide-marker" aria-label="Slide 2 of 9">02 — 09</p>
+      <p class="slide-marker" aria-label="Slide 2 of 10">02 — 10</p>
     </section>
 
     <section class="slide solution-slide" id="slide-3" aria-labelledby="solution-title" hidden>
@@ -754,7 +776,7 @@
           <p>Auri adjusts its support based on your needs, preferences, and what works for you.</p>
         </li>
       </ul>
-      <p class="slide-marker" aria-label="Slide 3 of 9">03 — 09</p>
+      <p class="slide-marker" aria-label="Slide 3 of 10">03 — 10</p>
     </section>
 
     <section class="slide works-slide" id="slide-4" aria-labelledby="works-title" hidden>
@@ -769,7 +791,7 @@
           Your browser cannot play this video. <a href="/BITS-Pitch-Deck/auri-demo.mp4">Open the Auri demonstration</a>.
         </video>
       </div>
-      <p class="slide-marker" aria-label="Slide 4 of 9">04 — 09</p>
+      <p class="slide-marker" aria-label="Slide 4 of 10">04 — 10</p>
     </section>
 
 <section class="slide why-slide" id="slide-5" aria-labelledby="why-title" hidden>
@@ -811,7 +833,7 @@
           </figure>
         </li>
       </ul>
-      <p class="slide-marker" aria-label="Slide 5 of 9">05 — 09</p>
+      <p class="slide-marker" aria-label="Slide 5 of 10">05 — 10</p>
     </section>
 
     <section class="slide audience-slide" id="slide-6" aria-labelledby="audience-title" hidden>
@@ -819,7 +841,7 @@
       <h2 class="audience-title" id="audience-title">WHO IT’S<br>FOR</h2>
       <p class="audience-statement">People who struggle with executive functioning.</p>
       <p class="audience-focus">Auri’s initial focus is on adults who experience difficulties with everyday tasks, organization, and follow-through.</p>
-      <p class="slide-marker" aria-label="Slide 6 of 9">06 — 09</p>
+      <p class="slide-marker" aria-label="Slide 6 of 10">06 — 10</p>
     </section>
 
     <section class="slide progress-slide" id="slide-7" aria-labelledby="progress-title" hidden>
@@ -843,42 +865,72 @@
         <h3>EARLY RESEARCH FINDINGS</h3>
         <p>Interviews revealed recurring difficulties with remembering responsibilities, prioritizing tasks, and getting started.</p>
       </div>
-      <p class="slide-marker" aria-label="Slide 7 of 9">07 — 09</p>
+      <p class="slide-marker" aria-label="Slide 7 of 10">07 — 10</p>
     </section>
 
-    <section class="slide next-slide" id="slide-8" aria-labelledby="next-title" hidden>
+    <section class="slide funding-slide" id="slide-8" aria-labelledby="funding-title" hidden>
       <header class="editorial-header">
         <span>Auri / Pitch Day 2026</span>
       </header>
-      <h2 class="next-title" id="next-title">WHAT’S<br>NEXT</h2>
-      <div class="next-roadmap">
-        <h3>THE NEXT 3 MONTHS</h3>
-        <p class="next-priorities">Complete the MVP.<br>Test with users.<br>Prepare for launch.</p>
-        <p class="next-roadmap-copy">Continue MVP development, test with real users, refine the experience through feedback, and prepare for an initial App Store release.</p>
+      <h2 class="funding-title" id="funding-title">FUNDING</h2>
+      <div class="funding-sections">
+        <div>
+          <h3>ALREADY INVESTED</h3>
+          <p class="funding-amount"><strong>$220</strong><span>CAD</span></p>
+          <table class="funding-budget" aria-label="Personal investment in Canadian dollars">
+            <tbody>
+              <tr><th scope="row">Apple Developer membership</th><td>$150</td></tr>
+              <tr><th scope="row">ChatGPT subscription (2 months)</th><td>$58</td></tr>
+              <tr><th scope="row">Initial AI API testing</th><td>$12</td></tr>
+            </tbody>
+          </table>
+          <p class="funding-note">Independently developed through personal funds and development effort.</p>
+        </div>
+        <div class="funding-request">
+          <h3>SPARK FUND REQUEST</h3>
+          <p class="funding-amount"><strong>$1,000</strong><span>CAD</span></p>
+          <table class="funding-budget" aria-label="Spark Fund request in Canadian dollars">
+            <tbody>
+              <tr><th scope="row">Claude Code (3 months)</th><td>$450</td></tr>
+              <tr><th scope="row">AI API usage</th><td>$200</td></tr>
+              <tr><th scope="row">User testing</th><td>$350</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="next-funding">
-        <h3>SPARK FUND REQUEST</h3>
-        <p class="next-amount"><strong>$1,000</strong><span>CAD</span></p>
-        <table class="next-budget" aria-label="Spark Fund budget in Canadian dollars">
-          <tbody>
-            <tr><th scope="row">Claude Code — 3 months</th><td>$450</td></tr>
-            <tr><th scope="row">AI API usage</th><td>$150</td></tr>
-            <tr><th scope="row">User testing</th><td>$250</td></tr>
-            <tr><th scope="row">Apple Developer membership</th><td>$150</td></tr>
-          </tbody>
-          <tfoot>
-            <tr><th scope="row">Total</th><td>$1,000</td></tr>
-          </tfoot>
-        </table>
-      </div>
-      <p class="slide-marker" aria-label="Slide 8 of 9">08 — 09</p>
+      <p class="slide-marker" aria-label="Slide 8 of 10">08 — 10</p>
     </section>
 
-    <section class="slide thanks-slide" id="slide-9" aria-labelledby="thanks-title" hidden>
+    <section class="slide roadmap-slide" id="slide-9" aria-labelledby="roadmap-title" hidden>
+      <header class="editorial-header">
+        <span>Auri / Pitch Day 2026</span>
+      </header>
+      <h2 class="roadmap-title" id="roadmap-title">THE NEXT THREE MONTHS</h2>
+      <ol class="roadmap-stages">
+        <li>
+          <p class="roadmap-month">MONTH 1</p>
+          <h3>BUILD</h3>
+          <p>Aim to complete the core MVP experience, including task management, projects, and adaptive support.</p>
+        </li>
+        <li>
+          <p class="roadmap-month">MONTH 2</p>
+          <h3>TEST</h3>
+          <p>Begin testing Auri with real users to evaluate how it helps them organize responsibilities, get started, and follow through.</p>
+        </li>
+        <li>
+          <p class="roadmap-month">MONTH 3</p>
+          <h3>REFINE &amp; PREPARE</h3>
+          <p>Improve Auri based on user feedback and prepare for an initial release.</p>
+        </li>
+      </ol>
+      <p class="slide-marker" aria-label="Slide 9 of 10">09 — 10</p>
+    </section>
+
+    <section class="slide thanks-slide" id="slide-10" aria-labelledby="thanks-title" hidden>
       <h2 class="thanks-title" id="thanks-title">THANK YOU</h2>
       <p class="thanks-wordmark">auri</p>
       <p class="thanks-founder">Zaynab Omer<span>Founder</span></p>
-      <p class="slide-marker" aria-label="Slide 9 of 9">09 — 09</p>
+      <p class="slide-marker" aria-label="Slide 10 of 10">10 — 10</p>
     </section>
   </main>
   <button class="present-control" id="present-control" type="button" aria-label="Present in full screen" title="Present in full screen; Escape to exit" hidden>Present</button>
@@ -1006,7 +1058,3 @@
   </script>
 </body>
 </html>
-
-
-
-
